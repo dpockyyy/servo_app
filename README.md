@@ -4,3 +4,4 @@ As a group project we are currently creating an app that allows us to find servi
 Team Members:
 - Casey
 - David
+- Nikki
