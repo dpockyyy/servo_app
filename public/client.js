@@ -1,6 +1,7 @@
 const mapCenterLat = document.querySelector('.map-ctr-lat')
 const mapCenterLng = document.querySelector('.map-ctr-lng')
 
+
 // hardcoded for now, pulled it out as variables so I can set starting co-ords for map center.
 let mapStartCenterLat = -37.42
 let mapStartCenterLng = 144
@@ -51,7 +52,7 @@ async function initMap() {
 
 }
 
-initMap();
+
 
 
 window.addEventListener("load", () => {
@@ -130,4 +131,15 @@ function geoFindMe() {
   }
 }
 
+function updateSpotlight(){
+  fetch('http://localhost:9090/api/stations/random')
+    .then(res => res.json())
+    .then(station => {
+      document.getElementById('spotlight-name').textContent = station.name
+      document.getElementById('spotlight-address').textContent = station.address
+    })
+}
+
+initMap()
 geoFindMe()
+updateSpotlight()
