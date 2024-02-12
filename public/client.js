@@ -5,9 +5,6 @@ const mapCenterLng = document.querySelector('.map-ctr-lng')
 let mapStartCenterLat = -37.42
 let mapStartCenterLng = 144
 
-mapCenterLat.textContent = mapStartCenterLat
-mapCenterLng.textContent = mapStartCenterLng
-
 async function initMap() {
   // Request needed libraries.
   const { Map, InfoWindow } = await google.maps.importLibrary("maps");
@@ -106,3 +103,31 @@ window.addEventListener("load", () => {
     setTimeout(clock, 1000)
   }
 })
+
+
+
+function geoFindMe() {
+
+  function success(position) {
+    const latitude = position.coords.latitude;
+    const longitude = position.coords.longitude;
+    mapStartCenterLat = latitude
+    mapStartCenterLng = longitude
+    mapCenterLat.textContent = mapStartCenterLat.toFixed(2)
+    mapCenterLng.textContent = mapStartCenterLng.toFixed(2)
+   
+    return `Latitude: ${latitude} °, Longitude: ${longitude} °`;
+  }
+
+  function error() {
+    return "Unable to retrieve your location";
+  }
+
+  if (!navigator.geolocation) {
+    return  "Geolocation is not supported by your browser";
+  } else {
+    navigator.geolocation.getCurrentPosition(success, error);
+  }
+}
+
+geoFindMe()
