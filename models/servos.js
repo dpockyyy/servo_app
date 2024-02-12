@@ -11,6 +11,18 @@ function findAllServos() {
         .then(result => result.rows)
 }
 
+function findRandomServos(){
+    const sql = `
+        SELECT * 
+        FROM servo_info
+        ORDER BY RANDOM()
+        LIMIT 1; 
+    `
+    
+    return db.query(sql)
+        .then(result => result.rows[0])
+}
+
 function findUniqueOwners() {
     const sql = `
         SELECT DISTINCT owner AS name
@@ -23,6 +35,7 @@ function findUniqueOwners() {
 
 module.exports = {
     findAllServos,
+    findRandomServos,
     findUniqueOwners
 }
 
