@@ -4,19 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Servo App</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <link rel="stylesheet" href="/style.css">
+    <script type="module" src="./client.js"></script>
 </head>
 <body>
-    <h1>Servo App</h1>
-
     <div class="grid-wrapper">
-        <nav class="navigation">left-hand side</nav>
-        <main class="google-map">Map</main>
-        <aside class="directions">right-hand side</aside>
+        <nav class="navigation">left-hand side
+            <div class="about">
+                <h4>team name: three musketeers</h4>
+                <p>
+                    David: <a href="https://github.com/dpockyyy">https://github.com/dpockyyy</a> <br>
+                    Casey: <a href="https://github.com/CaseyCheese">https://github.com/CaseyCheese</a> <br>
+                    Nikki: <a href="https://github.com/NWProjects">https://github.com/NWProjects</a><br>
+                </p>
+                <footer>&copy;2024</footer>
+            </div>
+        </nav>
+
+        <main class="google-map">
+            <div id="map"></div>
+
+        </main>
+
+        <aside class="directions">
+            right-hand side
+
+        </aside>
     </div>
 
 
 
     <script src="/client.js"></script>
+    <script>(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
+        ({key: "AIzaSyBBVmJUTQL7TidRGsReetenLy-OWCUElew", v: "weekly"});</script>
 </body>
 </html>
