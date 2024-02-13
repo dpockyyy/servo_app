@@ -12,9 +12,14 @@ app.use(express.static('public'))
 app.set('view engine', 'ejs')
 
 app.get('/', (req, res) => {
-    res.render('home', {
-        MAPS_KEY: process.env.MAPS_KEY
-    })
+    fetch('http://localhost:9090/api/stats')
+        .then(res => res.json())
+        .then(data => {
+            res.render('home', {
+                MAPS_KEY: process.env.MAPS_KEY,
+                data: data
+            })
+        })
 })
 
 app.get('/test', (req, res) => {
