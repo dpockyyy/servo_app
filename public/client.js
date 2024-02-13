@@ -7,6 +7,12 @@ const currentDate = document.querySelector('#current-date')
 const wtiOilPrice = document.querySelector('#wti-oil-price')
 const brentOilPrice = document.querySelector('#brent-oil-price')
 const naturalGasPrice = document.querySelector('#natural-gas-price')
+const weatherLocation = document.querySelector('.weather-location')
+const weatherDesc = document.querySelector('.weather-desc')
+const weatherTemp = document.querySelector('.weather-temp')
+const weatherRain = document.querySelector('.weather-rain')
+const weatherHumidity = document.querySelector('.weather-humidity')
+const weatherWind = document.querySelector('.weather-wind')
 
 
 refreshLink.addEventListener('click', handleClick)
@@ -124,11 +130,13 @@ function geoFindMe() {
     mapStartCenterLng = longitude
     mapCenterLat.textContent = mapStartCenterLat.toFixed(2)
     mapCenterLng.textContent = mapStartCenterLng.toFixed(2)
-   
+    console.log(latitude);
+    console.log(longitude);
     return `Latitude: ${latitude} °, Longitude: ${longitude} °`;
   }
 
   function error() {
+    console.log('error');
     return "Unable to retrieve your location";
   }
 
@@ -137,6 +145,7 @@ function geoFindMe() {
   } else {
     navigator.geolocation.getCurrentPosition(success, error);
   }
+  initMap()
 }
 
 function updateSpotlight(){
@@ -153,10 +162,23 @@ function handleClick(event){
   updateSpotlight()
 }
 
-function updateLastestPrice(){
-  fetch()
+function updateWeather(){
+  const lat = -37.42
+  const lon = 144
+  fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${mapStartCenterLat}&lon=${mapStartCenterLng}&appid=347533d0e42725230e0bb151a7cb2eea&units=metric`)
+  .then(response => response.json())
+  .then(weatherData => {
+    weatherLocation.textContent = weatherData.timezone.split('/')[1] + ', ' +  weatherData.timezone.split('/')[0] 
+    weatherDesc.textContent = weatherData.current.weather[0].description
+    weatherTemp.textContent = weatherData.current.temp
+    weatherRain.textContent = weatherData.daily[0].pop
+    weatherHumidity.textContent = weatherData.current.humidity
+    weatherWind.textContent = weatherData.current.wind_speed   
+  })
 }
 
-initMap()
+
+
 geoFindMe()
 updateSpotlight()
+updateWeather()
