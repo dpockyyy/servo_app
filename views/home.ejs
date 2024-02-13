@@ -31,6 +31,7 @@
                 
                 <% } %>
             </div>
+            
 
             <div class="latest-prices">
                 <h4>latest prices</h4>
@@ -42,13 +43,12 @@
 
 
             <div class="about">
-                <h4>team name: three musketeers</h4>
-                <p>
-                    David: <a href="https://github.com/dpockyyy">https://github.com/dpockyyy</a> <br>
-                    Casey: <a href="https://github.com/CaseyCheese">https://github.com/CaseyCheese</a> <br>
-                    Nikki: <a href="https://github.com/NWProjects">https://github.com/NWProjects</a><br>
-                </p>
-                <footer>&copy;2024</footer>
+                <h3>about</h3>
+                <h4>team name: Three Musketeers</h4>
+                <p>David <a href="https://github.com/dpockyyy">https://github.com/dpockyyy</a></p>
+                <p>Casey <a href="https://github.com/CaseyCheese">https://github.com/CaseyCheese</a></p>
+                <p>Nikki <a href="https://github.com/NWProjects">https://github.com/NWProjects</a></p>
+                <footer>&copy; 2024</footer>
             </div>
         </nav>
 
@@ -68,14 +68,23 @@
                 <p>lng: <span class="map-ctr-lng"></span></p>
             </div>
 
+            <div class="nearest">
+                <h3>nearest</h3>
+                <% for (let station of stations) { %>
+                    <div id="servo-station">
+                        <div id="servo-name"><%= station.name %></div> <div id="servo-distance"></div>
+                        <div id="servo-address"><%= station.address %></div>
+                        <hr>
+                    </div>
+                <% } %>
+            </div>
+
         </aside>
     </div>
 
 
 
     <script src="/client.js"></script>
-    <!-- <script>(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
-        ({key: "<%= MAPS_KEY %>", v: "weekly"});</script> -->
     <script>(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
         ({key: "<%= MAPS_KEY %>", v: "weekly"});</script>
 </body>
