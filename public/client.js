@@ -1,6 +1,8 @@
 const mapCenterLat = document.querySelector('.map-ctr-lat')
 const mapCenterLng = document.querySelector('.map-ctr-lng')
+const refreshLink = document.querySelector('#refresh-link')
 
+refreshLink.addEventListener('click', handleClick)
 
 // hardcoded for now, pulled it out as variables so I can set starting co-ords for map center.
 let mapStartCenterLat = -37.42
@@ -48,12 +50,7 @@ async function initMap() {
         infoWindow.open(marker.map, marker)
       });
   })
-)
-
-}
-
-
-
+)}
 
 window.addEventListener("load", () => {
   clock()
@@ -106,7 +103,6 @@ window.addEventListener("load", () => {
 })
 
 
-
 function geoFindMe() {
 
   function success(position) {
@@ -138,6 +134,11 @@ function updateSpotlight(){
       document.getElementById('spotlight-name').textContent = station.name
       document.getElementById('spotlight-address').textContent = station.address
     })
+}
+
+function handleClick(event){
+  event.preventDefault()
+  updateSpotlight()
 }
 
 initMap()
