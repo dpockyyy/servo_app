@@ -9,6 +9,11 @@
     background-color: gray;
 }
 
+.spotlight{
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+}
+
 /* 
  * Always set the map height explicitly to define the size of the div element
  * that contains the map. 
