@@ -1,6 +1,13 @@
 const mapCenterLat = document.querySelector('.map-ctr-lat')
 const mapCenterLng = document.querySelector('.map-ctr-lng')
 const refreshLink = document.querySelector('#refresh-link')
+const stationName = document.querySelector('#station-name')
+const stationAddress = document.querySelector('#station-address')
+const currentDate = document.querySelector('#current-date')
+const wtiOilPrice = document.querySelector('#wti-oil-price')
+const brentOilPrice = document.querySelector('#brent-oil-price')
+const naturalGasPrice = document.querySelector('#natural-gas-price')
+
 
 refreshLink.addEventListener('click', handleClick)
 
@@ -131,14 +138,18 @@ function updateSpotlight(){
   fetch('http://localhost:9090/api/stations/random')
     .then(res => res.json())
     .then(station => {
-      document.getElementById('spotlight-name').textContent = station.name
-      document.getElementById('spotlight-address').textContent = station.address
+      stationName.textContent = station.name
+      stationAddress.textContent = station.address
     })
 }
 
 function handleClick(event){
   event.preventDefault()
   updateSpotlight()
+}
+
+function updateLastestPrice(){
+  fetch()
 }
 
 initMap()
