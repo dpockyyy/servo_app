@@ -17,7 +17,12 @@ router.get('/api/stations/random', (req, res) => {
 
 router.get('/api/owners', (req, res) => {
     Servo.findUniqueOwners()
-    .then(owners => res.json(owners))
+        .then(owners => res.json(owners))
+})
+
+router.get('/api/stats', (req, res) => {
+    Servo.findStats()
+        .then(stats => res.json(stats))
 })
 
 
