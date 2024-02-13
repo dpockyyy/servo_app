@@ -11,11 +11,34 @@
 <body>
     <div class="grid-wrapper">
         <nav class="navigation">
-            <div class="stats">
-                <h3>Stats</h4>
-                <h5>total station: 100</h6>
-                <h5>total owners: 100</h6>
+            <div class="spotlight">
+                <h4>Spotlight</h4>
+                <h4><a href="" id="refresh-link">refresh</a></h4>
+                <span id="station-name"></span><br>
+                <span id="station-address"></span>
+            </div>
 
+
+            <div class="stats">
+                <h4>Stats</h4>
+                <h6>total stations: <%= data.total_stations %></h6>
+                <h6>total owners: <%= data.total_owners %></h6>
+                <% for (let i = 0; i < 7; i++) { %> 
+                    <div class="flex-wrapper">
+                        <div class="servo-name"><%= data.owners[i].owner %></div>
+                        <div class="servo-total"><%= data.owners[i].total %></div>
+                    </div>
+                
+                <% } %>
+            </div>
+            
+
+            <div class="latest-prices">
+                <h4>latest prices</h4>
+                <p><span id="current-date"></span></p>
+                <p>WTI oil <span id="wti-oil-price"></span></p>
+                <p>Brent oil <span id="brent-oil-price"></span></p>
+                <p>Natural gas <span id="natural-gas-price"></span></p>
             </div>
 
 

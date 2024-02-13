@@ -19,18 +19,16 @@ app.get('/', (req, res) => {
             for (let i = 0; i < 10; i++) {
                 stations.push(data[i])
             }
-            // console.log(data);
-            // console.log('=========================================');
-            // console.log(stations);
         })
-        .then(() => {
+        .then(fetch('http://localhost:9090/api/stats'))
+        .then(res => res.json())
+        .then(data => {
             res.render('home', {
                 MAPS_KEY: process.env.MAPS_KEY,
-                stations: stations
+                stations: stations,
+                data: data
             })
         })
-
-    
 })
 
 app.get('/test', (req, res) => {

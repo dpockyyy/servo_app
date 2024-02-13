@@ -1,12 +1,19 @@
 const mapCenterLat = document.querySelector('.map-ctr-lat')
 const mapCenterLng = document.querySelector('.map-ctr-lng')
+const refreshLink = document.querySelector('#refresh-link')
+const stationName = document.querySelector('#station-name')
+const stationAddress = document.querySelector('#station-address')
+const currentDate = document.querySelector('#current-date')
+const wtiOilPrice = document.querySelector('#wti-oil-price')
+const brentOilPrice = document.querySelector('#brent-oil-price')
+const naturalGasPrice = document.querySelector('#natural-gas-price')
+
+
+refreshLink.addEventListener('click', handleClick)
 
 // hardcoded for now, pulled it out as variables so I can set starting co-ords for map center.
 let mapStartCenterLat = -37.42
 let mapStartCenterLng = 144
-
-mapCenterLat.textContent = mapStartCenterLat
-mapCenterLng.textContent = mapStartCenterLng
 
 async function initMap() {
   // Request needed libraries.
@@ -29,6 +36,7 @@ async function initMap() {
   })
   
   fetch('http://localhost:9090/api/stations/all')
+    .then(response => response.json())
     .then(data => data.forEach(
       station => {
         const marker = new AdvancedMarkerElement({
@@ -105,3 +113,50 @@ window.addEventListener("load", () => {
     setTimeout(clock, 1000)
   }
 })
+
+
+function geoFindMe() {
+
+  function success(position) {
+    const latitude = position.coords.latitude;
+    const longitude = position.coords.longitude;
+    mapStartCenterLat = latitude
+    mapStartCenterLng = longitude
+    mapCenterLat.textContent = mapStartCenterLat.toFixed(2)
+    mapCenterLng.textContent = mapStartCenterLng.toFixed(2)
+   
+    return `Latitude: ${latitude} °, Longitude: ${longitude} °`;
+  }
+
+  function error() {
+    return "Unable to retrieve your location";
+  }
+
+  if (!navigator.geolocation) {
+    return  "Geolocation is not supported by your browser";
+  } else {
+    navigator.geolocation.getCurrentPosition(success, error);
+  }
+}
+
+function updateSpotlight(){
+  fetch('http://localhost:9090/api/stations/random')
+    .then(res => res.json())
+    .then(station => {
+      stationName.textContent = station.name
+      stationAddress.textContent = station.address
+    })
+}
+
+function handleClick(event){
+  event.preventDefault()
+  updateSpotlight()
+}
+
+function updateLastestPrice(){
+  fetch()
+}
+
+initMap()
+geoFindMe()
+updateSpotlight()
