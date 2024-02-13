@@ -29,28 +29,27 @@ async function initMap() {
   })
   
   fetch('http://localhost:9090/api/stations/all')
-  .then(response => response.json())
-  .then(data => data.forEach(
-    station => {
-      const marker = new AdvancedMarkerElement({
-        map,
-        position: { lat: parseFloat(station.latitude), lng: parseFloat(station.longitude) },
-        title: station.name,
-      });
+    .then(data => data.forEach(
+      station => {
+        const marker = new AdvancedMarkerElement({
+          map,
+          position: { lat: parseFloat(station.latitude), lng: parseFloat(station.longitude) },
+          title: station.name,
+        });
 
-      const contentString = 
-      `<h4 id="firstHeading" class="firstHeading">${station.name}</h4>`
-      + station.address
-      const infoWindow = new InfoWindow({
-        content: contentString,
-      });
+        const contentString = 
+        `<h4 id="firstHeading" class="firstHeading">${station.name}</h4>`
+        + station.address
+        const infoWindow = new InfoWindow({
+          content: contentString,
+        });
 
-      marker.addListener("click", () => {
-        infoWindow.close();
-        infoWindow.open(marker.map, marker)
-      });
-  })
-)
+        marker.addListener("click", () => {
+          infoWindow.close();
+          infoWindow.open(marker.map, marker)
+        });
+      })
+    )
 
 }
 
@@ -83,7 +82,7 @@ window.addEventListener("load", () => {
 
     // get date components
     const day = today.getDay()
-    let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+    let days = ['Sun', 'Mon', 'Tues', 'Weds', 'Thurs', 'Fri', 'Sat']
     let dayName = days[day]
 
 

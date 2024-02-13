@@ -11,7 +11,7 @@ router.get('/api/stations/all', (req, res) => {
 
 router.get('/api/owners', (req, res) => {
     Servo.findUniqueOwners()
-    .then(owners => res.json(owners))
+        .then(owners => res.json(owners))
 })
 
 module.exports = router

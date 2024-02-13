@@ -12,9 +12,25 @@ app.use(express.static('public'))
 app.set('view engine', 'ejs')
 
 app.get('/', (req, res) => {
-    res.render('home', {
-        MAPS_KEY: process.env.MAPS_KEY
-    })
+    let stations = []
+    fetch('http://localhost:9090/api/stations/all')
+        .then(response => response.json())
+        .then(data => {
+            for (let i = 0; i < 10; i++) {
+                stations.push(data[i])
+            }
+            // console.log(data);
+            // console.log('=========================================');
+            // console.log(stations);
+        })
+        .then(() => {
+            res.render('home', {
+                MAPS_KEY: process.env.MAPS_KEY,
+                stations: stations
+            })
+        })
+
+    
 })
 
 app.get('/test', (req, res) => {
