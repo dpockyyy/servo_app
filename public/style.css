@@ -54,3 +54,8 @@
   border-right: 8px solid transparent;
   border-top: 8px solid #4285F4;
 }
+
+.flex-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
