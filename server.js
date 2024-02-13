@@ -20,7 +20,7 @@ app.get('/', (req, res) => {
                 stations.push(data[i])
             }
         })
-        .then(fetch('http://localhost:9090/api/stats'))
+        .then(() => fetch('http://localhost:9090/api/stats'))
         .then(res => res.json())
         .then(data => {
             res.render('home', {
