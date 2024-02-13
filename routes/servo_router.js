@@ -25,6 +25,11 @@ router.get('/api/stats', (req, res) => {
         .then(stats => res.json(stats))
 })
 
+router.get('/api/stations/nearest', (req, res) => {
+    Servo.findNearestServos(-37.42, 144, 20) // These are currently hard-coded values; we want to pass in the latitude & longitude from the user's current location
+        .then(servos => res.json(servos))
+})
+
 
 
 module.exports = router
