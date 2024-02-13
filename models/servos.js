@@ -35,12 +35,12 @@ function findUniqueOwners() {
 
 function findStats() {
     const sql = `
-    SELECT * 
-    FROM 
-    (SELECT owner, COUNT (*) as total 
-    FROM servo_info GROUP BY owner) as innerTable
-    WHERE total > 1 
-    ORDER BY total DESC;
+        SELECT * 
+        FROM 
+        (SELECT owner, COUNT (*) as total 
+        FROM servo_info GROUP BY owner) as innerTable
+        WHERE total > 1 
+        ORDER BY total DESC;
     `
     let statsObject = {}
 
@@ -48,8 +48,8 @@ function findStats() {
         .then(result => {
             statsObject.owners = result.rows
             let sql = `
-            SELECT COUNT (distinct owner)
-            FROM servo_info;
+                SELECT COUNT (distinct owner)
+                FROM servo_info;
             `
             
             return db.query(sql)
@@ -58,8 +58,8 @@ function findStats() {
                     statsObject.total_owners = result.rows[0].count
                     
                     let sql = `
-                    SELECT COUNT(owner)
-                    FROM servo_info;
+                        SELECT COUNT(owner)
+                        FROM servo_info;
                     `
 
                     return db.query(sql)
@@ -67,8 +67,31 @@ function findStats() {
                             statsObject.total_stations = result.rows[0].count
                             return statsObject
                         })
-            })
+                })
     
+        })
+}
+
+function findNearestServos(lat, lng, rad) {
+    const degrees = 1/(111.1/rad)
+
+    let sql = `
+        SELECT *
+        FROM servo_info
+        WHERE latitude < ${(lat + degrees)}
+            AND latitude > ${(lat - degrees)}
+            AND longitude < ${(lng + degrees)}
+            AND longitude > ${(lng - degrees)}
+        LIMIT 700;
+    `
+
+    return db.query(sql)
+        .then(servos => {
+            let servosObj = servos.rows
+            servosObj.forEach(servo => {
+                servo.distance = Math.abs(servo.latitude - lat) + Math.abs(servo.longitude - lng)
+            })
+            return servosObj.sort((a, b) => a.distance - b.distance)
         })
 }
 
@@ -76,6 +99,7 @@ module.exports = {
     findAllServos,
     findUniqueOwners,
     findRandomServos,
-    findStats
+    findStats,
+    findNearestServos
 }
 

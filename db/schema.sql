@@ -17,8 +17,8 @@ CREATE TABLE servo_info (
     spatial_confidence TEXT,
     revised TEXT,
     comment TEXT,
-    latitude TEXT NOT NULL,
-    longitude TEXT NOT NULL
+    latitude DECIMAL(15, 12),
+    longitude DECIMAL(15, 12)
 );
 
 
