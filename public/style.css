@@ -59,3 +59,20 @@
   display: flex;
   justify-content: space-between;
 }
+
+.weather-widget{
+  background-color: #2f3c4e;
+  color: #e4ecfd;
+  border-radius: 10px;
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+}
+
+.weather-temp{
+  font-size: 1.5em;
+}
+
+.weather-widget p{
+  font-size: 1em;
+  display: flexbox;
+}
