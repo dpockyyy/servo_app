@@ -15,6 +15,15 @@ const directions = document.querySelector('.directions')
 const gridWrapper = document.querySelector('.grid-wrapper')
 const github = document.querySelectorAll('.github')
 const githubImg = document.querySelectorAll('.github-img')
+const newStationBtn = document.querySelector('.add-new-servo')
+const newServoForm = document.querySelector('.new-servo-form')
+
+newStationBtn.addEventListener('click', handleNewClick)
+
+function handleNewClick() {
+  newServoForm.style.display = 'none'
+  alert('yay')
+}
 const measurementToggle = document.querySelector('#measurement-toggle')
 const servoDistances = document.querySelectorAll('#servo-distance')
 const servoMeasurements = document.querySelectorAll('#servo-measurement')
@@ -35,15 +44,13 @@ for (let servoStation of servoStations) {
 
 // attempted to add user imgs, probably going to sack this feature, going back to sleeeeep..
 function loadUserImg() {
-  for (user of github) {
-    console.log(user.innerHTML.split('/')[3])
+  for (let i = 0; i < 3; i++) {
+    let user = github[i]
     let username = user.innerHTML.split('/')[3]
     fetch(`https://api.github.com/users/${username}`)
       .then(result => result.json())
       .then(data => {
-        let img = document.createElement("img")
-        img.src = data.avatar_url
-        user.appendChild(img)
+        githubImg[i].src = data.avatar_url
       })
   }
 }
@@ -352,6 +359,11 @@ function handleCheckboxMeasurementToggle() {
     }
 }
 
+// geoFindMe()
+updateSpotlight()
+loadUserImg()
+// updateWeather()
+// detectUserLocation()
 
 function detectUserLocation() {
     navigator.geolocation.getCurrentPosition(

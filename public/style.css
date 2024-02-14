@@ -81,5 +81,16 @@
   position: absolute;
   right: 50%;
   top: 50%;
-  display: none;
+  /* display: none; */
+}
+
+.github-img {
+  display: block;
+  width: 30px;
+}
+
+.userInfo {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }

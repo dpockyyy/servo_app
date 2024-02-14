@@ -108,7 +108,18 @@ function findServosBounds(startLat, endLat, startLng, endLng) {
     // AND longitude < ${endLng};
     return db.query(sql)
         .then(result => result.rows)
+}
 
+function createServo(name, owner, address, suburb, state, latitude, longitude) {
+    let sql = `
+    INSERT INTO servo_info
+    (featureType, description, class, name, operational_status, owner, industryId, address, suburb, state, latitude, longitude)
+    VALUES
+    ("Petrol Station", "An establishment where a range of fuel products can be purchased by motorists", "Petrol Station", $1, "Operational", $2, $3, $4, $5, $6, $7);
+    `
+
+    return db.query(sql, [name, owner, address, suburb, state, latitude, longitude])
+        .then(result => result.rows[0])
 }
 
 module.exports = {
@@ -117,6 +128,7 @@ module.exports = {
     findRandomServos,
     findStats,
     findNearestServos,
-    findServosBounds
+    findServosBounds,
+    createServo
 }
 

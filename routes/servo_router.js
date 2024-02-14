@@ -40,6 +40,10 @@ router.get('/api/stations/bounds', (req, res) => {
         .then(servos => res.json(servos))
 })
 
+router.post('/api/stations', (req, res) => {
+    Servo.createServo(params)
+        .then(servo => res.status(201).json(servo))
+})
 
 module.exports = router
 
