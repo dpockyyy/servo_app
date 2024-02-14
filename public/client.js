@@ -3,10 +3,6 @@ const mapCenterLng = document.querySelector('.map-ctr-lng')
 const refreshLink = document.querySelector('#refresh-link')
 const stationName = document.querySelector('#station-name')
 const stationAddress = document.querySelector('#station-address')
-const currentDate = document.querySelector('#current-date')
-const wtiOilPrice = document.querySelector('#wti-oil-price')
-const brentOilPrice = document.querySelector('#brent-oil-price')
-const naturalGasPrice = document.querySelector('#natural-gas-price')
 const weatherLocation = document.querySelector('.weather-location')
 const weatherDesc = document.querySelector('.weather-desc')
 const weatherTemp = document.querySelector('.weather-temp')
@@ -14,11 +10,42 @@ const weatherRain = document.querySelector('.weather-rain')
 const weatherHumidity = document.querySelector('.weather-humidity')
 const weatherWind = document.querySelector('.weather-wind')
 const stationLink = document.querySelector('#station-link')
-let stationId = 0
+const navigation = document.querySelector('.navigation')
+const directions = document.querySelector('.directions')
+const gridWrapper = document.querySelector('.grid-wrapper')
 
 
 refreshLink.addEventListener('click', handleClick)
 stationLink.addEventListener('click', updateSpotlight)
+document.addEventListener('keydown', handleDisplay)
+
+let show = true
+//event.ctrlKey && event.shiftKey && 
+function handleDisplay(event){
+ 
+    if (event.key.toLowerCase() === 'b') {
+        
+        console.log(event.key);
+        event.preventDefault()
+        
+        if (show){
+            navigation.style.display = 'none'
+            directions.style.display = 'none'
+            gridWrapper.style.gridTemplateColumns = '1fr'
+            show = false
+            console.log('success');
+
+        } else{
+            navigation.style.display = ''
+            directions.style.display = ''
+            gridWrapper.style.gridTemplateColumns = '1fr 3fr 1fr'
+            console.log('fail');
+            show = true
+        }}
+    }
+
+        
+    
 
 // hardcoded for now, pulled it out as variables so I can set starting co-ords for map center.
 let mapStartCenterLat = -33.8
@@ -184,20 +211,7 @@ function updateWeather(){
   })
 }
 
-
-// function centerMap(event){
-//     event.preventDefault();
-//     fetch('/api/stations/random')
-//         .then(response => response.json())
-//         .then(servos => {
-//             mapStartCenterLat = parseFloat(servos.latitude);
-//             mapStartCenterLng = parseFloat(servos.longitude);
-//             initMap()
-//         })
-// }
-
-
-
 geoFindMe()
 updateSpotlight()
 updateWeather()
+
