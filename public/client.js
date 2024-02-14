@@ -15,6 +15,17 @@ const directions = document.querySelector('.directions')
 const gridWrapper = document.querySelector('.grid-wrapper')
 const github = document.querySelectorAll('.github')
 const githubImg = document.querySelectorAll('.github-img')
+const measurementToggle = document.querySelector('#measurement-toggle')
+const servoDistances = document.querySelectorAll('#servo-distance')
+const servoMeasurements = document.querySelectorAll('#servo-measurement')
+const servoStations = document.querySelectorAll('#servo-station')
+
+
+
+refreshLink.addEventListener('click', handleClickRefreshLink)
+for (let servoStation of servoStations) {
+    servoStation.addEventListener('click', handleClickServoStation)
+}
 
 // attempted to add user imgs, probably going to sack this feature, going back to sleeeeep..
 function loadUserImg() {
@@ -176,10 +187,7 @@ window.addEventListener("load", () => {
 
         //make clock a 12-hour time clock
         const hourTime = hour > 12 ? hour - 12 : hour
-
-        // if (hour === 0) {
-        //   hour = 12;
-        // }
+        
         //assigning 'am' or 'pm' to indicate time of the day
         const ampm = hour < 12 ? "AM" : "PM"
 
@@ -219,7 +227,10 @@ function geoFindMe() {
         mapStartCenterLng = longitude
         mapCenterLat.textContent = mapStartCenterLat.toFixed(6)
         mapCenterLng.textContent = mapStartCenterLng.toFixed(6)
-     
+
+        // fetch(`http://localhost:9090/api/stations/nearest?lat=${mapStartCenterLat}&lng=${mapStartCenterLng}`)
+
+
         return `Latitude: ${latitude} °, Longitude: ${longitude} °`;
     }
 
@@ -249,7 +260,8 @@ function updateSpotlight(){
         })
 }
 
-function handleClick(event){
+
+function handleClickRefreshLink(event){
     event.preventDefault()
     fetch('http://localhost:9090/api/stations/random')
     .then(res => res.json())
@@ -263,26 +275,45 @@ function handleClick(event){
 
 
 function updateWeather(){
-  const lat = -37.42
-  const lon = 144
-  fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${mapStartCenterLat}&lon=${mapStartCenterLng}&appid=347533d0e42725230e0bb151a7cb2eea&units=metric`)
-  .then(response => response.json())
-  .then(weatherData => {
-    weatherLocation.textContent = weatherData.timezone.split('/')[1] + ', ' +  weatherData.timezone.split('/')[0] 
-    weatherDesc.textContent = weatherData.current.weather[0].description
-    weatherTemp.textContent = weatherData.current.temp
-    weatherRain.textContent = weatherData.daily[0].pop
-    weatherHumidity.textContent = weatherData.current.humidity
-    weatherWind.textContent = weatherData.current.wind_speed   
-  })
+    fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${mapStartCenterLat}&lon=${mapStartCenterLng}&appid=347533d0e42725230e0bb151a7cb2eea&units=metric`)
+        .then(response => response.json())
+        .then(weatherData => {
+            weatherLocation.textContent = weatherData.timezone.split('/')[1] + ', ' +  weatherData.timezone.split('/')[0] 
+            weatherDesc.textContent = weatherData.current.weather[0].description
+            weatherTemp.textContent = weatherData.current.temp
+            weatherRain.textContent = weatherData.daily[0].pop
+            weatherHumidity.textContent = weatherData.current.humidity
+            weatherWind.textContent = weatherData.current.wind_speed   
+    })
 }
 
 
-// geoFindMe()
-updateSpotlight()
-// loadUserImg()
-// updateWeather()
-// detectUserLocation()
+function handleClickServoStation(event) {
+    mapStartCenterLat = mapCenterLat
+    mapStartCenterLng = mapCenterLng
+
+    
+}
+
+
+function handleCheckboxMeasurementToggle() {
+    if (measurementToggle.checked) {
+        for (let servoMeasurement of servoMeasurements) {
+            servoMeasurement.innerHTML = 'km'
+        }
+        for (let servoDistance of servoDistances) {
+            servoDistance.innerHTML = servoDistance.innerHTML / 1000
+        }
+    } else {
+        for (let servoMeasurement of servoMeasurements) {
+            servoMeasurement.innerHTML = 'm'
+        }
+        for (let servoDistance of servoDistances) {
+            servoDistance.innerHTML = servoDistance.innerHTML * 1000
+        }
+    }
+}
+
 
 function detectUserLocation() {
     navigator.geolocation.getCurrentPosition(
@@ -298,3 +329,9 @@ function detectUserLocation() {
     console.log('sucess')
 }
 
+
+// geoFindMe()
+updateSpotlight()
+// loadUserImg()
+// updateWeather()
+// detectUserLocation()
