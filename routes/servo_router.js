@@ -30,6 +30,12 @@ router.get('/api/stations/nearest', (req, res) => {
         .then(servos => res.json(servos))
 })
 
+router.get('/api/stations/bounds', (req, res) => {
+    let lat = req.query
+    console.log(lat)
+    Servo.findServosBounds(req.query.startLat, req.query.endLat, req.query.startLng, req.query.endLng)
+        .then(servos => res.json(servos))
+})
 
 
 module.exports = router
