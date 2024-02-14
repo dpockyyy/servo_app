@@ -57,15 +57,26 @@ async function initMap() {
     });
   
     google.maps.event.addListener(map, "center_changed", function() {
-        var center = this.getCenter()
-        var latitude = center.lat()
-        var longitude = center.lng()
-    mapCenterLat.textContent = latitude.toFixed(2)
-    mapCenterLng.textContent = longitude.toFixed(2)
+      var center = this.getCenter()
+      var latitude = center.lat()
+      var longitude = center.lng()
+    mapCenterLat.textContent = latitude.toFixed(6)
+    mapCenterLng.textContent = longitude.toFixed(6)
+
+    google.maps.event.addListener(map, "idle", function() {
+      var bounds = map.getBounds();
+      var ne = bounds.getNorthEast();
+      var sw = bounds.getSouthWest();
+      console.log(bounds)
+      // console.log(sw)
+    })
     
     })
 
- 
+    function startingBounds() {
+      var bounds = map.getBounds()
+      console.log(bounds)
+    }
     
     fetch('http://localhost:9090/api/stations/all')
         .then(response => response.json())
@@ -126,6 +137,7 @@ async function initMap() {
                 });
             })
         )
+        startingBounds()
 }
 
 initMap()
