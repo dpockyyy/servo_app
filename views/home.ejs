@@ -73,13 +73,42 @@
                 <input type="checkbox" onclick="handleCheckboxMeasurementToggle()" id="measurement-toggle">
                 <label for="">Show distances in km</label>
                 <hr> <!-- take out <hr> and replace with CSS -->
-                <% for (let station of stations) { %>
+                <!-- <5 for (let station of stations) { %>
                     <div id="servo-station">
-                        <div id="servo-name"><%= station.name %> </div><strong><div id="servo-distance"><%= Math.round(station.distance * 111.1 * 1000) %></div><span id="servo-measurement">m</span></strong>
-                        <div id="servo-address"><%= station.address %></div>
+                        <div id="servo-name"><5= station.name %> </div><strong><div id="servo-distance"><5= Math.round(station.distance * 111.1 * 1000) %></div><span id="servo-measurement">m</span></strong>
+                        <div id="servo-address"><5= station.address %></div> -->
                         <hr> <!-- take out <hr> and replace with CSS -->
                     </div>
-                <% } %>
+                <!-- <5 } %> -->
+                <div id="servo-station">
+                    <div id="servo-name"></div>
+                    <div id="servo-distance"></div><span id="servo-measurement"></span>
+                    <div id="servo-address"></div>
+                </div>
+
+                <div id="servo-station">
+                    <div id="servo-name"></div>
+                    <div id="servo-distance"></div><span id="servo-measurement"></span>
+                    <div id="servo-address"></div>
+                </div>
+
+                <div id="servo-station">
+                    <div id="servo-name"></div>
+                    <div id="servo-distance"></div><span id="servo-measurement"></span>
+                    <div id="servo-address"></div>
+                </div>
+
+                <div id="servo-station">
+                    <div id="servo-name"></div>
+                    <div id="servo-distance"></div><span id="servo-measurement"></span>
+                    <div id="servo-address"></div>
+                </div>
+
+                <div id="servo-station">
+                    <div id="servo-name"></div>
+                    <div id="servo-distance"></div><span id="servo-measurement"></span>
+                    <div id="servo-address"></div>
+                </div>
             </div>
 
         </aside>

@@ -27,7 +27,8 @@ router.get('/api/stats', (req, res) => {
 router.get('/api/stations/nearest', (req, res) => {
     let lat = req.query.lat
     let lng = req.query.lng
-    console.log(req.body);
+    console.log('hi');
+    console.log(req.query);
     Servo.findNearestServos(-37.42, 144, 20) // (-37.42, 144, 20)
         .then(servos => {
             res.json(servos)
