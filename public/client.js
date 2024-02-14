@@ -15,17 +15,15 @@ const directions = document.querySelector('.directions')
 const gridWrapper = document.querySelector('.grid-wrapper')
 
 
+
 refreshLink.addEventListener('click', handleClick)
 stationLink.addEventListener('click', updateSpotlight)
 document.addEventListener('keydown', handleDisplay)
+document.addEventListener("DOMContentLoaded", detectUserLocation)
 
 let show = true
-//event.ctrlKey && event.shiftKey && 
 function handleDisplay(event){
- 
-    if (event.key.toLowerCase() === 'b') {
-        
-        console.log(event.key);
+    if (event.ctrlKey && event.shiftKey && event.key.toLowerCase() === 'b') {
         event.preventDefault()
         
         if (show){
@@ -33,19 +31,14 @@ function handleDisplay(event){
             directions.style.display = 'none'
             gridWrapper.style.gridTemplateColumns = '1fr'
             show = false
-            console.log('success');
-
         } else{
             navigation.style.display = ''
             directions.style.display = ''
             gridWrapper.style.gridTemplateColumns = '1fr 3fr 1fr'
-            console.log('fail');
             show = true
-        }}
+        }
     }
-
-        
-    
+}
 
 // hardcoded for now, pulled it out as variables so I can set starting co-ords for map center.
 let mapStartCenterLat = -37.42
@@ -230,7 +223,14 @@ function updateSpotlight(){
 
 function handleClick(event){
     event.preventDefault()
-    updateSpotlight()
+    fetch('http://localhost:9090/api/stations/random')
+    .then(res => res.json())
+    .then(station => {
+        stationLink.textContent = station.name
+        stationAddress.textContent = station.address
+        mapStartCenterLat = parseFloat(station.latitude)
+        mapStartCenterLng = parseFloat(station.longitude)
+    })
 }
 
 
@@ -253,4 +253,19 @@ function updateWeather(){
 geoFindMe()
 updateSpotlight()
 updateWeather()
+//detectUserLocation()
+
+function detectUserLocation() {
+    navigator.geolocation.getCurrentPosition(
+        
+        function(position) {
+            const userLat = position.coords.latitude;
+            const userLon = position.coords.longitude;
+            console.log(userLon);
+            initMap(userLat, userLon)
+        }
+        
+    )
+    console.log('sucess')
+}
 
