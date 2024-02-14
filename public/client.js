@@ -3,16 +3,18 @@ const mapCenterLng = document.querySelector('.map-ctr-lng')
 const refreshLink = document.querySelector('#refresh-link')
 const stationName = document.querySelector('#station-name')
 const stationAddress = document.querySelector('#station-address')
-const currentDate = document.querySelector('#current-date')
-const wtiOilPrice = document.querySelector('#wti-oil-price')
-const brentOilPrice = document.querySelector('#brent-oil-price')
-const naturalGasPrice = document.querySelector('#natural-gas-price')
 const weatherLocation = document.querySelector('.weather-location')
 const weatherDesc = document.querySelector('.weather-desc')
 const weatherTemp = document.querySelector('.weather-temp')
 const weatherRain = document.querySelector('.weather-rain')
 const weatherHumidity = document.querySelector('.weather-humidity')
 const weatherWind = document.querySelector('.weather-wind')
+const stationLink = document.querySelector('#station-link')
+const navigation = document.querySelector('.navigation')
+const directions = document.querySelector('.directions')
+const gridWrapper = document.querySelector('.grid-wrapper')
+const github = document.querySelectorAll('.github')
+const githubImg = document.querySelectorAll('.github-img')
 const measurementToggle = document.querySelector('#measurement-toggle')
 const servoDistances = document.querySelectorAll('#servo-distance')
 const servoMeasurements = document.querySelectorAll('#servo-measurement')
@@ -25,55 +27,145 @@ for (let servoStation of servoStations) {
     servoStation.addEventListener('click', handleClickServoStation)
 }
 
-// hardcoded for now, pulled it out as variables so I can set starting co-ords for map center.
-let mapStartCenterLat = -37.42
-let mapStartCenterLng = 144
+// attempted to add user imgs, probably going to sack this feature, going back to sleeeeep..
+function loadUserImg() {
+  for (user of github) {
+    console.log(user.innerHTML.split('/')[3])
+    let username = user.innerHTML.split('/')[3]
+    fetch(`https://api.github.com/users/${username}`)
+      .then(result => result.json())
+      .then(data => {
+        let img = document.createElement("img")
+        img.src = data.avatar_url
+        user.appendChild(img)
+      })
+      
+  }
+}
+
+refreshLink.addEventListener('click', handleClick)
+stationLink.addEventListener('click', updateSpotlight)
+document.addEventListener('keydown', handleDisplay)
+document.addEventListener("DOMContentLoaded", geoFindMe)
+
+
+let show = true
+function handleDisplay(event){
+    if (event.ctrlKey && event.shiftKey && event.key.toLowerCase() === 'b') {
+        event.preventDefault()
+        
+        if (show) {
+            navigation.style.display = 'none'
+            directions.style.display = 'none'
+            gridWrapper.style.gridTemplateColumns = '1fr'
+            show = false
+        } else {
+            navigation.style.display = ''
+            directions.style.display = ''
+            gridWrapper.style.gridTemplateColumns = '1fr 3fr 1fr'
+            show = true
+        }
+    }
+}
+
+// hardcoded for now, pulled it out as variables so I can set starting co-ords for map center. 
+let mapStartCenterLat =  -34
+let mapStartCenterLng = 151.04
+
 
 async function initMap() {
     // Request needed libraries.
-    const { Map, InfoWindow } = await google.maps.importLibrary("maps");
-    const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
-    const map = new Map(document.getElementById("map"), {
-        center: { lat: mapStartCenterLat, lng: mapStartCenterLng },
-        zoom: 13,
-        minZoom: 9,
-        mapId: "4504f8b37365c3d0",
-    });
+  const { Map, InfoWindow } = await google.maps.importLibrary("maps");
+  const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+  
+  const map = new Map(document.getElementById("map"), {
+    center: { lat: mapStartCenterLat, lng: mapStartCenterLng },
+    zoom: 13,
+    minZoom: 9,
+    mapId: "4504f8b37365c3d0",
+  });
 
-    google.maps.event.addListener(map, "center_changed", function() {
-        var center = this.getCenter()
-        var latitude = center.lat()
-        var longitude = center.lng()
-    mapCenterLat.textContent = latitude.toFixed(6)
-    mapCenterLng.textContent = longitude.toFixed(6)
+  google.maps.event.addListener(map, "idle", function() {
+    var bounds = map.getBounds();
+    let mapStartBoundLat = bounds.ci.hi
+    let mapEndBoundLat = bounds.ci.lo
+    let mapStartBoundLng = bounds.Lh.hi
+    let mapEndBoundLng = bounds.Lh.lo
     
+  fetch(`http://localhost:9090/api/stations/bounds/?startLat=${mapStartBoundLat}&endLat=${mapEndBoundLat}&startLng=${mapStartBoundLng}&endLng=${mapEndBoundLng}`)
+    .then(response => response.json())
+    .then(data => data.forEach(
+      station => {
+      const caltex = document.createElement("img");
+      const bp = document.createElement("img")
+      const shell = document.createElement("img")
+      const seven11 = document.createElement("img")
+        
+      caltex.src =
+        "https://i.postimg.cc/v8c2CbBV/ca1512cec7-caltex-logo-caltex-logo-removebg-preview.png";
+
+      bp.src = 
+        "https://i.postimg.cc/4yFcb6z8/BP-removebg-preview-3.png"
+
+      shell.src = 
+        "https://i.postimg.cc/HLMQyCh5/Shell-logo-svg-removebg-preview.png"
+
+      seven11.src = 
+        "https://i.postimg.cc/x1tjNxgS/7-Eleven-logo-brand-logotype.png"
+
+      let icons = {
+        Caltex: caltex,
+        BP: bp,
+        Shell: shell,
+        Seven11: seven11,
+      }
+    
+      let markerObject = {
+          map,  
+          position: { lat: parseFloat(station.latitude), lng: parseFloat(station.longitude) },
+          title: station.name,
+      }
+
+      let stationOwner = station.owner
+      if (icons.hasOwnProperty(stationOwner)) {
+        markerObject.content = icons[stationOwner]
+      } 
+      else if (stationOwner === "7-Eleven Pty Ltd") {
+        let Seven11 = "Seven11"
+        markerObject.content = icons[Seven11]
+      }
+
+      const marker = new AdvancedMarkerElement(
+        markerObject
+      );
+
+      const contentString = 
+      `<h4 id="firstHeading" class="firstHeading">${station.name}</h4>`
+      + station.address
+      const infoWindow = new InfoWindow({
+          content: contentString,
+      });
+
+      marker.addListener("click", () => {
+          infoWindow.close();
+          infoWindow.open(marker.map, marker)
+      });
     })
-    
-    fetch('http://localhost:9090/api/stations/all')
-        .then(response => response.json())
-        .then(data => data.forEach(
-            station => {
-                const marker = new AdvancedMarkerElement({
-                    map,
-                    position: { lat: parseFloat(station.latitude), lng: parseFloat(station.longitude) },
-                    title: station.name,
-                });
-
-                const contentString = 
-                `<h4 id="firstHeading" class="firstHeading">${station.name}</h4>`
-                + station.address
-                const infoWindow = new InfoWindow({
-                    content: contentString,
-                });
-
-                marker.addListener("click", () => {
-                    infoWindow.close();
-                    infoWindow.open(marker.map, marker)
-                });
-            })
-        )
+  )         
+  })
+  
+  google.maps.event.addListener(map, "center_changed", function() {
+    var center = this.getCenter()
+    var latitude = center.lat()
+    var longitude = center.lng()
+  mapCenterLat.textContent = latitude.toFixed(6)
+  mapCenterLng.textContent = longitude.toFixed(6)
+  
+  })
 
 }
+
+
 
 initMap()
 
@@ -136,7 +228,8 @@ function geoFindMe() {
         mapCenterLat.textContent = mapStartCenterLat.toFixed(6)
         mapCenterLng.textContent = mapStartCenterLng.toFixed(6)
 
-        fetch(`http://localhost:9090/api/stations/nearest?lat=${mapStartCenterLat}&lng=${mapStartCenterLng}`)
+        // fetch(`http://localhost:9090/api/stations/nearest?lat=${mapStartCenterLat}&lng=${mapStartCenterLng}`)
+
 
         return `Latitude: ${latitude} °, Longitude: ${longitude} °`;
     }
@@ -159,15 +252,25 @@ function updateSpotlight(){
     fetch('http://localhost:9090/api/stations/random')
         .then(res => res.json())
         .then(station => {
-            stationName.textContent = station.name
+            stationLink.textContent = station.name
             stationAddress.textContent = station.address
+            // mapStartCenterLat = parseFloat(station.latitude)
+            // mapStartCenterLng = parseFloat(station.longitude)
+            // initMap()
         })
 }
 
 
 function handleClickRefreshLink(event){
     event.preventDefault()
-    updateSpotlight()
+    fetch('http://localhost:9090/api/stations/random')
+    .then(res => res.json())
+    .then(station => {
+        stationLink.textContent = station.name
+        stationAddress.textContent = station.address
+        mapStartCenterLat = parseFloat(station.latitude)
+        mapStartCenterLng = parseFloat(station.longitude)
+    })
 }
 
 
@@ -211,24 +314,24 @@ function handleCheckboxMeasurementToggle() {
     }
 }
 
-geoFindMe()
+
+function detectUserLocation() {
+    navigator.geolocation.getCurrentPosition(
+        
+        function(position) {
+            const userLat = position.coords.latitude;
+            const userLon = position.coords.longitude;
+            // console.log(userLon);
+            initMap(userLat, userLon)
+        }
+        
+    )
+    console.log('sucess')
+}
+
+
+// geoFindMe()
 updateSpotlight()
-updateWeather()
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////
-// // This is to get the user's center location on the map and send it to the server.
-// // Code was found here: https://stackoverflow.com/questions/40905568/how-to-pass-a-js-variable-from-my-client-to-an-express-server
-// $.ajax({
-//     url : "/api/center_location",
-//     type: "POST",
-//     dataType:'json',
-//     data: {
-//         mapStartCenterLat,
-//         mapStartCenterLng
-//     },
-//     success: function(data){
-//         console.log(data.msg); // 'OK'
-//     },
-// });
+// loadUserImg()
+// updateWeather()
+// detectUserLocation()
