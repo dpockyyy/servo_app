@@ -14,7 +14,6 @@ router.get('/api/stations/random', (req, res) => {
         .then(servos => res.json(servos))
 })
 
-
 router.get('/api/owners', (req, res) => {
     Servo.findUniqueOwners()
         .then(owners => res.json(owners))
@@ -26,8 +25,13 @@ router.get('/api/stats', (req, res) => {
 })
 
 router.get('/api/stations/nearest', (req, res) => {
-    Servo.findNearestServos(-37.42, 144, 20) // These are currently hard-coded values; we want to pass in the latitude & longitude from the user's current location
-        .then(servos => res.json(servos))
+    let lat = req.query.lat
+    let lng = req.query.lng
+    console.log(req.body);
+    Servo.findNearestServos(-37.42, 144, 20) // (-37.42, 144, 20)
+        .then(servos => {
+            res.json(servos)
+        })
 })
 
 

@@ -13,11 +13,25 @@ app.set('view engine', 'ejs')
 
 app.get('/', (req, res) => {
     let stations = []
-    fetch('http://localhost:9090/api/stations/all')
+    fetch('http://localhost:9090/api/stations/nearest')
         .then(response => response.json())
         .then(data => {
-            for (let i = 0; i < 10; i++) {
-                stations.push(data[i])
+            if (data.length >= 10) {
+                for (let i = 0; i < 10; i++) {
+                    stations.push(data[i])
+                }
+            } else if (data) {
+                for (let station of data) {
+                    stations.push(station)
+                }
+            } else {
+                stations = [
+                    {
+                        name: '',
+                        distance: '',
+                        address: ''
+                    }
+                ]
             }
         })
         .then(() => fetch('http://localhost:9090/api/stats'))

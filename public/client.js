@@ -13,9 +13,17 @@ const weatherTemp = document.querySelector('.weather-temp')
 const weatherRain = document.querySelector('.weather-rain')
 const weatherHumidity = document.querySelector('.weather-humidity')
 const weatherWind = document.querySelector('.weather-wind')
+const measurementToggle = document.querySelector('#measurement-toggle')
+const servoDistances = document.querySelectorAll('#servo-distance')
+const servoMeasurements = document.querySelectorAll('#servo-measurement')
+const servoStations = document.querySelectorAll('#servo-station')
 
 
-refreshLink.addEventListener('click', handleClick)
+
+refreshLink.addEventListener('click', handleClickRefreshLink)
+for (let servoStation of servoStations) {
+    servoStation.addEventListener('click', handleClickServoStation)
+}
 
 // hardcoded for now, pulled it out as variables so I can set starting co-ords for map center.
 let mapStartCenterLat = -37.42
@@ -36,8 +44,8 @@ async function initMap() {
         var center = this.getCenter()
         var latitude = center.lat()
         var longitude = center.lng()
-    mapCenterLat.textContent = latitude.toFixed(2)
-    mapCenterLng.textContent = longitude.toFixed(2)
+    mapCenterLat.textContent = latitude.toFixed(6)
+    mapCenterLng.textContent = longitude.toFixed(6)
     
     })
     
@@ -87,10 +95,7 @@ window.addEventListener("load", () => {
 
         //make clock a 12-hour time clock
         const hourTime = hour > 12 ? hour - 12 : hour
-
-        // if (hour === 0) {
-        //   hour = 12;
-        // }
+        
         //assigning 'am' or 'pm' to indicate time of the day
         const ampm = hour < 12 ? "AM" : "PM"
 
@@ -128,9 +133,11 @@ function geoFindMe() {
         const longitude = position.coords.longitude;
         mapStartCenterLat = latitude
         mapStartCenterLng = longitude
-        mapCenterLat.textContent = mapStartCenterLat.toFixed(2)
-        mapCenterLng.textContent = mapStartCenterLng.toFixed(2)
-     
+        mapCenterLat.textContent = mapStartCenterLat.toFixed(6)
+        mapCenterLng.textContent = mapStartCenterLng.toFixed(6)
+
+        fetch(`http://localhost:9090/api/stations/nearest?lat=${mapStartCenterLat}&lng=${mapStartCenterLng}`)
+
         return `Latitude: ${latitude} °, Longitude: ${longitude} °`;
     }
 
@@ -157,29 +164,71 @@ function updateSpotlight(){
         })
 }
 
-function handleClick(event){
+
+function handleClickRefreshLink(event){
     event.preventDefault()
     updateSpotlight()
 }
 
 
 function updateWeather(){
-  const lat = -37.42
-  const lon = 144
-  fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${mapStartCenterLat}&lon=${mapStartCenterLng}&appid=347533d0e42725230e0bb151a7cb2eea&units=metric`)
-  .then(response => response.json())
-  .then(weatherData => {
-    weatherLocation.textContent = weatherData.timezone.split('/')[1] + ', ' +  weatherData.timezone.split('/')[0] 
-    weatherDesc.textContent = weatherData.current.weather[0].description
-    weatherTemp.textContent = weatherData.current.temp
-    weatherRain.textContent = weatherData.daily[0].pop
-    weatherHumidity.textContent = weatherData.current.humidity
-    weatherWind.textContent = weatherData.current.wind_speed   
-  })
+    fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${mapStartCenterLat}&lon=${mapStartCenterLng}&appid=347533d0e42725230e0bb151a7cb2eea&units=metric`)
+        .then(response => response.json())
+        .then(weatherData => {
+            weatherLocation.textContent = weatherData.timezone.split('/')[1] + ', ' +  weatherData.timezone.split('/')[0] 
+            weatherDesc.textContent = weatherData.current.weather[0].description
+            weatherTemp.textContent = weatherData.current.temp
+            weatherRain.textContent = weatherData.daily[0].pop
+            weatherHumidity.textContent = weatherData.current.humidity
+            weatherWind.textContent = weatherData.current.wind_speed   
+    })
 }
 
 
+function handleClickServoStation(event) {
+    mapStartCenterLat = mapCenterLat
+    mapStartCenterLng = mapCenterLng
+
+    
+}
+
+
+function handleCheckboxMeasurementToggle() {
+    if (measurementToggle.checked) {
+        for (let servoMeasurement of servoMeasurements) {
+            servoMeasurement.innerHTML = 'km'
+        }
+        for (let servoDistance of servoDistances) {
+            servoDistance.innerHTML = servoDistance.innerHTML / 1000
+        }
+    } else {
+        for (let servoMeasurement of servoMeasurements) {
+            servoMeasurement.innerHTML = 'm'
+        }
+        for (let servoDistance of servoDistances) {
+            servoDistance.innerHTML = servoDistance.innerHTML * 1000
+        }
+    }
+}
 
 geoFindMe()
 updateSpotlight()
 updateWeather()
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////
+// // This is to get the user's center location on the map and send it to the server.
+// // Code was found here: https://stackoverflow.com/questions/40905568/how-to-pass-a-js-variable-from-my-client-to-an-express-server
+// $.ajax({
+//     url : "/api/center_location",
+//     type: "POST",
+//     dataType:'json',
+//     data: {
+//         mapStartCenterLat,
+//         mapStartCenterLng
+//     },
+//     success: function(data){
+//         console.log(data.msg); // 'OK'
+//     },
+// });
