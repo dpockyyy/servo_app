@@ -65,10 +65,10 @@ async function initMap() {
       let mapStartBoundLng = bounds.Lh.hi
       let mapEndBoundLng = bounds.Lh.lo
       
-      console.log(bounds.Lh.lo)
-      console.log(bounds.Lh.hi)
       console.log(bounds.ci.hi)
       console.log(bounds.ci.lo)
+      console.log(bounds.Lh.hi)
+      console.log(bounds.Lh.lo)
       fetch(`http://localhost:9090/api/stations/bounds/?startLat=${mapStartBoundLat}&endLat=${mapEndBoundLat}&startLng=${mapStartBoundLng}&endLng=${mapEndBoundLng}`)
         .then(response => response.json())
         .then(data => {

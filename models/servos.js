@@ -101,8 +101,8 @@ function findServosBounds(startLat, endLat, startLng, endLng) {
     FROM servo_info
     WHERE latitude < ${startLat}
     AND latitude > ${endLat}
-    AND longitude > ${startLng}
-    AND longitude < ${endLng}
+    AND longitude < ${startLng}
+    AND longitude > ${endLng};
     `
     // AND longitude > ${startLng}
     // AND longitude < ${endLng};
