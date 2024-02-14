@@ -19,7 +19,7 @@ const gridWrapper = document.querySelector('.grid-wrapper')
 refreshLink.addEventListener('click', handleClick)
 stationLink.addEventListener('click', updateSpotlight)
 document.addEventListener('keydown', handleDisplay)
-document.addEventListener("DOMContentLoaded", detectUserLocation)
+document.addEventListener("DOMContentLoaded", geoFindMe)
 
 let show = true
 function handleDisplay(event){
@@ -140,7 +140,7 @@ async function initMap() {
         startingBounds()
 }
 
-initMap()
+// initMap()
 
 
 window.addEventListener("load", () => {
@@ -227,9 +227,9 @@ function updateSpotlight(){
         .then(station => {
             stationLink.textContent = station.name
             stationAddress.textContent = station.address
-            mapStartCenterLat = parseFloat(station.latitude)
-            mapStartCenterLng = parseFloat(station.longitude)
-            initMap()
+            // mapStartCenterLat = parseFloat(station.latitude)
+            // mapStartCenterLng = parseFloat(station.longitude)
+            // initMap()
         })
 }
 
@@ -262,10 +262,10 @@ function updateWeather(){
 }
 
 
-geoFindMe()
+// geoFindMe()
 updateSpotlight()
 updateWeather()
-//detectUserLocation()
+// detectUserLocation()
 
 function detectUserLocation() {
     navigator.geolocation.getCurrentPosition(
