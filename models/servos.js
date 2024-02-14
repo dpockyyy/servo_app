@@ -95,6 +95,7 @@ function findNearestServos(lat, lng, rad) {
         })
 }
 
+
 module.exports = {
     findAllServos,
     findUniqueOwners,
