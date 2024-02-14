@@ -13,13 +13,16 @@ const weatherTemp = document.querySelector('.weather-temp')
 const weatherRain = document.querySelector('.weather-rain')
 const weatherHumidity = document.querySelector('.weather-humidity')
 const weatherWind = document.querySelector('.weather-wind')
+const stationLink = document.querySelector('#station-link')
+let stationId = 0
 
 
 refreshLink.addEventListener('click', handleClick)
+stationLink.addEventListener('click', updateSpotlight)
 
 // hardcoded for now, pulled it out as variables so I can set starting co-ords for map center.
-let mapStartCenterLat = -37.42
-let mapStartCenterLng = 144
+let mapStartCenterLat = -33.8
+let mapStartCenterLng = 151
 
 async function initMap() {
     // Request needed libraries.
@@ -64,7 +67,7 @@ async function initMap() {
                 });
             })
         )
-
+        
 }
 
 initMap()
@@ -152,8 +155,11 @@ function updateSpotlight(){
     fetch('http://localhost:9090/api/stations/random')
         .then(res => res.json())
         .then(station => {
-            stationName.textContent = station.name
+            stationLink.textContent = station.name
             stationAddress.textContent = station.address
+            mapStartCenterLat = parseFloat(station.latitude)
+            mapStartCenterLng = parseFloat(station.longitude)
+            initMap()
         })
 }
 
@@ -177,6 +183,18 @@ function updateWeather(){
     weatherWind.textContent = weatherData.current.wind_speed   
   })
 }
+
+
+// function centerMap(event){
+//     event.preventDefault();
+//     fetch('/api/stations/random')
+//         .then(response => response.json())
+//         .then(servos => {
+//             mapStartCenterLat = parseFloat(servos.latitude);
+//             mapStartCenterLng = parseFloat(servos.longitude);
+//             initMap()
+//         })
+// }
 
 
 
