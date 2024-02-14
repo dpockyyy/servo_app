@@ -48,8 +48,9 @@ function handleDisplay(event){
     
 
 // hardcoded for now, pulled it out as variables so I can set starting co-ords for map center.
-let mapStartCenterLat = -33.8
-let mapStartCenterLng = 151
+let mapStartCenterLat = -37.42
+let mapStartCenterLng = 144
+
 
 async function initMap() {
     // Request needed libraries.
@@ -61,7 +62,7 @@ async function initMap() {
         minZoom: 9,
         mapId: "4504f8b37365c3d0",
     });
-
+  
     google.maps.event.addListener(map, "center_changed", function() {
         var center = this.getCenter()
         var latitude = center.lat()
@@ -70,16 +71,54 @@ async function initMap() {
     mapCenterLng.textContent = longitude.toFixed(2)
     
     })
+
+ 
     
     fetch('http://localhost:9090/api/stations/all')
         .then(response => response.json())
         .then(data => data.forEach(
             station => {
-                const marker = new AdvancedMarkerElement({
-                    map,
-                    position: { lat: parseFloat(station.latitude), lng: parseFloat(station.longitude) },
-                    title: station.name,
-                });
+              const caltex = document.createElement("img");
+              const bp = document.createElement("img")
+              const shell = document.createElement("img")
+              const seven11 = document.createElement("img")
+              
+              caltex.src =
+                "https://i.postimg.cc/Z5t3zQR5/ca1512cec7-caltex-logo-caltex-logo-removebg-preview.png";
+
+              bp.src = 
+                "https://i.postimg.cc/kXxGKgJ7/BP-removebg-preview.png"
+
+              shell.src = "https://i.postimg.cc/HLMQyCh5/Shell-logo-svg-removebg-preview.png"
+
+              seven11.serc = "https://i.postimg.cc/zBCWBSc1/7-Eleven-Logo-wine-removebg-preview.png"
+
+              let icons = {
+                Caltex: caltex,
+                BP: bp,
+                Shell: shell,
+                Seven11: seven11,
+              }
+            
+              let markerObject = {
+                  map,  
+                  position: { lat: parseFloat(station.latitude), lng: parseFloat(station.longitude) },
+                  title: station.name,
+              }
+              let stationOwner = station.owner
+              if (icons.hasOwnProperty(stationOwner)) {
+                markerObject.content = icons[stationOwner]
+              } 
+              // else if (stationOwner === "7-Eleven Pty Ltd") {
+              //   console.log("711")
+              //   let Seven11 = "Seven11"
+              //   markerObject.content = icons[Seven11]
+              // }
+
+              // can't seem to get 7/11 to work at this stage. spent way too much time on this will circle back later. 
+                const marker = new AdvancedMarkerElement(
+                  markerObject
+                );
 
                 const contentString = 
                 `<h4 id="firstHeading" class="firstHeading">${station.name}</h4>`
@@ -94,7 +133,6 @@ async function initMap() {
                 });
             })
         )
-        
 }
 
 initMap()
@@ -210,6 +248,7 @@ function updateWeather(){
     weatherWind.textContent = weatherData.current.wind_speed   
   })
 }
+
 
 geoFindMe()
 updateSpotlight()
