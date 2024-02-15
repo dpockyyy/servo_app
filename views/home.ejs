@@ -13,7 +13,7 @@
         <nav class="navigation">
             <div class="spotlight">
                 <div class="spotlight-header">
-                    <h4>Spotlight</h4>
+                    <h3 class="spotlight-heading">Spotlight</h3>
                     <h4><a href="" id="refresh-link">refresh</a></h4>
                 </div>
                 <div class="spotlight-info">
@@ -24,9 +24,9 @@
 
 
             <div class="stats">
-                <h4>Stats</h4>
-                <h6>total stations: <%= data.total_stations %></h6>
-                <h6>total owners: <%= data.total_owners %></h6>
+                <h3 class="stats-heading">Stats</h3>
+                <h4>total stations: <%= data.total_stations %></h4>
+                <h4 class="stats-owners">total owners: <%= data.total_owners %></h4>
                 <% for (let i = 0; i < 7; i++) { %> 
                     <div class="flex-wrapper">
                         <div class="servo-name"><%= data.owners[i].owner %></div>
@@ -53,8 +53,8 @@
             </div>
 
             <div class="about">
-                <h3>About</h3>
-                <h4>The Three Musketeers</h4>
+                <h3 class="about-heading">About</h3>
+                <h4 class="about-team">The Three Musketeers</h4>
                 <div class="userInfo">
                     <img src="" alt="" class="github-img">
                     <div class="username">David</div>
@@ -83,21 +83,25 @@
 
         <aside class="directions">
             <div id="clock">
-                <h4 id="date-time"></h4>
+                <h3 id="date-time"></h3>
             </div>
 
             <div class="center-location">
-                <h4>Map Center Location</h4>
-                <p>lat: <span id="map-ctr-lat"></span></p>
-                <p>lng: <span id="map-ctr-lng"></span></p>
-                <button class="find-address-btn">Find</button>
+                <h4 class="center-heading">Map Center Location</h4>
+                <div class="center-coords">
+                    <p>lat: <span id="map-ctr-lat"></span></p>
+                    <p>lng: <span id="map-ctr-lng"></span></p>
+                </div>
+                <!-- <button class="find-address-btn">Find</button> -->
                 <p><span class="map-ctr-address"></span></p>
             </div>
 
             <div class="nearest">
-                <h3>nearest</h3>
-                <input type="checkbox" onclick="handleCheckboxMeasurementToggle()" id="measurement-toggle">
-                <label for="">Show distances in km</label>
+                <div class="nearest-info">
+                    <h3 class="nearest-header">Nearest</h3>
+                    <input type="checkbox" onclick="handleCheckboxMeasurementToggle()" id="measurement-toggle">
+                    <label for="">Show distances in km</label>
+                </div>
                 
                 <div id="servo-station">
                     <div class="flex-wrapper-nearest">
