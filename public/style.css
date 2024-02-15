@@ -12,248 +12,248 @@
 }
 
 .spotlight-header{
-  display: grid;
-  grid-template-columns: 3fr 1fr;
+    display: grid;
+    grid-template-columns: 3fr 1fr;
 
 }
 
 .spotlight {
-  padding: 25px;
-  border: 2px solid black;
+    padding: 25px;
+    border: 2px solid black;
 }
 
 #station-address {
-  font-weight: bold;
+    font-weight: bold;
 }
 
 #station-link {
-  padding-bottom: 5px;
-  margin-bottom: 10px;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
 }
 
 .spotlight-heading {
-  padding-bottom: 10px;
+    padding-bottom: 10px;
 }
 
 .station-link{
-  margin-bottom: 20px;
+    margin-bottom: 20px;
   
 }
 
 .stats {
-  padding: 30px;
-  border: 2px solid black;
+    padding: 30px;
+    border: 2px solid black;
 }
 
 .stats-heading {
-  padding-bottom: 5px;
+    padding-bottom: 5px;
 }
 
 .stats-owners {
-  padding-bottom: 5px;
+    padding-bottom: 5px;
 }
+
 /* 
  * Always set the map height explicitly to define the size of the div element
  * that contains the map. 
  */
- #map {
+#map {
     height: 100%;
-  }
+}
   
   /* 
    * Optional: Makes the sample page fill the window. 
    */
-  html,
-  body {
+html,
+body {
     height: 100%;
     margin: 0;
     padding: 0;
-  }
+}
 
   /* HTML marker styles */
 .price-tag {
-  background-color: #4285F4;
-  border-radius: 8px;
-  color: #FFFFFF;
-  font-size: 14px;
-  padding: 10px 15px;
-  position: relative;
+    background-color: #4285F4;
+    border-radius: 8px;
+    color: #FFFFFF;
+    font-size: 14px;
+    padding: 10px 15px;
+    position: relative;
 }
 
 .price-tag::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 100%;
-  transform: translate(-50%, 0);
-  width: 0;
-  height: 0;
-  border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
-  border-top: 8px solid #4285F4;
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    transform: translate(-50%, 0);
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid #4285F4;
 }
 
 .flex-wrapper {
-  display: flex;
-  justify-content: space-between;
-  border-top: 1px solid black;
-  padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid black;
+    padding: 5px;
 }
 
 .weather-widget{
-  background-color: #2f3c4e;
-  color: #e4ecfd;
-  border-radius: 10px;
-  padding: 20px;
-  font-family: 'Arial', sans-serif;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  margin: 1px;
+    background-color: #2f3c4e;
+    color: #e4ecfd;
+    border-radius: 10px;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 1px;
 }
 
 .about {
-  padding: 30px;
-  border: 2px solid black;
+    padding: 30px;
+    border: 2px solid black;
 }
 
 .about-heading {
-  padding-bottom: 5px;
+    padding-bottom: 5px;
 }
 
 .about-team {
-  padding-bottom: 10px;
-  text-decoration: underline;
+    padding-bottom: 10px;
+    text-decoration: underline;
 }
 
 .weather-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  font-size: 1.2em;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 1.2em;
 }
 
 .weather-info {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .weather-stats {
-  display: flex;
+    display: flex;
     justify-content: space-between;
-  align-items: center;
+    align-items: center;
 }
 
 .weather-stats p{
-  width: 100px;
-  height: 30px;
-  border-radius: 20px;
-  background: rgba(299,299,299,0.4);
-  justify-content: center;
-  align-items: center; 
-  margin: 5px;
+    width: 100px;
+    height: 30px;
+    border-radius: 20px;
+    background: rgba(299,299,299,0.4);
+    justify-content: center;
+    align-items: center; 
+    margin: 5px;
 }
 
 .weather-stats p span{
-  margin: 10px;
+    margin: 10px;
 }
 
 .weather-temp{
-  font-size: 2.5em;
+    font-size: 2.5em;
 }
 
 .weather-widget p{
-  font-size: 1em;
-  display: flex;
+    font-size: 1em;
+    display: flex;
 }
 
 #weather-icon{
-  width: 100px;
-  height: 100px;
+    width: 100px;
+    height: 100px;
 }
 
 .new-servo-form {
-  position: absolute;
-  right: 50%;
-  top: 50%;
-  display: none;
+    position: absolute;
+    right: 50%;
+    top: 50%;
+    display: none;
 }
 
 .github-img {
-  display: block;
-  width: 30px;
+    display: block;
+    width: 30px;
 }
 
 .userInfo {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  /* border: 2px solid black; */
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    /* border: 2px solid black; */
 }
 
 .github {
-  padding-bottom: 5px;
+    padding-bottom: 5px;
 }
 
 .flex-wrapper-nearest {
-  display: flex;
-  gap: 3px;
-  padding: 3px;
+    display: flex;
+    gap: 3px;
+    padding: 3px;
 }
 
 #servo-distance {
-  font-weight: bold;
+    font-weight: bold;
 }
 
 #servo-measurement {
-  font-weight: bold;
+    font-weight: bold;
 }
 
 #servo-station {
-  border-top: 2px solid black;
-  border-left: 2px solid black;
-  border-right: 2px solid black;;
-  padding: 10px;
-  
+    border-top: 2px solid black;
+    border-left: 2px solid black;
+    border-right: 2px solid black;;
+    padding: 10px;
 }
 
 #servo-station:last-child {
-  border-bottom: 2px solid black;
+    border-bottom: 2px solid black;
 }
 
 #clock {
-  text-align: center;
-  align-items: center;
-  border: 2px solid black;
-  font-family: 'Arial';
-  padding: 30px;
+    text-align: center;
+    align-items: center;
+    border: 2px solid black;
+    font-family: 'Arial';
+    padding: 30px;
 }
 
 .center-location {
-  border: 2px solid black;
-  padding: 15px;
+    border: 2px solid black;
+    padding: 15px;
 }
 
 .center-coords {
-  padding: 5px;
-  padding-bottom: 10px;
+    padding: 5px;
+    padding-bottom: 10px;
 }
 
 .center-heading {
-  padding: 5px;
+    padding: 5px;
 }
 
 .map-ctr-address {
-  font-weight: bold;
-  padding: 5px;
+    font-weight: bold;
+    padding: 5px;
 }
 
 .nearest-info {
-  padding: 20px;
-  border: 2px solid black;
+    padding: 20px;
+    border: 2px solid black;
 }
 
 .nearest-header {
-  padding: 10px;
+    padding: 10px;
 }
