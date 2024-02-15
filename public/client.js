@@ -24,9 +24,14 @@ const mapCtrAddress = document.querySelectorAll('.map-ctr-address')
 
 
 refreshLink.addEventListener('click', handleClickRefreshLink)
+stationLink.addEventListener('click', updateSpotlight)
+document.addEventListener('keydown', handleDisplay)
+document.addEventListener("DOMContentLoaded", geoFindMe)
+document.addEventListener('click', handleClickCtrAddress)
 for (let servoStation of servoStations) {
     servoStation.addEventListener('click', handleClickServoStation)
 }
+
 
 // attempted to add user imgs, probably going to sack this feature, going back to sleeeeep..
 function loadUserImg() {
@@ -43,11 +48,6 @@ function loadUserImg() {
   }
 }
 
-
-stationLink.addEventListener('click', updateSpotlight)
-document.addEventListener('keydown', handleDisplay)
-document.addEventListener("DOMContentLoaded", geoFindMe)
-document.addEventListener('click', handleClickCtrAddress)
 
 function handleClickCtrAddress(event){
     let lat = mapCenterLat.textContent
@@ -87,84 +87,84 @@ let mapStartCenterLng = 151.04
 
 async function initMap() {
     // Request needed libraries.
-  const { Map, InfoWindow } = await google.maps.importLibrary("maps");
-  const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
-  
-  const map = new Map(document.getElementById("map"), {
-    center: { lat: mapStartCenterLat, lng: mapStartCenterLng },
-    zoom: 13,
-    minZoom: 9,
-    mapId: "4504f8b37365c3d0",
-  });
-
-  google.maps.event.addListener(map, "idle", function() {
-    var bounds = map.getBounds();
-    let mapStartBoundLat = bounds.ci.hi
-    let mapEndBoundLat = bounds.ci.lo
-    let mapStartBoundLng = bounds.Lh.hi
-    let mapEndBoundLng = bounds.Lh.lo
+    const { Map, InfoWindow } = await google.maps.importLibrary("maps");
+    const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
     
-  fetch(`http://localhost:9090/api/stations/bounds/?startLat=${mapStartBoundLat}&endLat=${mapEndBoundLat}&startLng=${mapStartBoundLng}&endLng=${mapEndBoundLng}`)
-    .then(response => response.json())
-    .then(data => data.forEach(
-      station => {
-      const caltex = document.createElement("img");
-      const bp = document.createElement("img")
-      const shell = document.createElement("img")
-      const seven11 = document.createElement("img")
+    const map = new Map(document.getElementById("map"), {
+        center: { lat: mapStartCenterLat, lng: mapStartCenterLng },
+        zoom: 13,
+        minZoom: 9,
+        mapId: "4504f8b37365c3d0",
+    });
+
+    google.maps.event.addListener(map, "idle", function() {
+        var bounds = map.getBounds();
+        let mapStartBoundLat = bounds.ci.hi
+        let mapEndBoundLat = bounds.ci.lo
+        let mapStartBoundLng = bounds.Lh.hi
+        let mapEndBoundLng = bounds.Lh.lo
         
-      caltex.src =
-        "https://i.postimg.cc/v8c2CbBV/ca1512cec7-caltex-logo-caltex-logo-removebg-preview.png";
+    fetch(`http://localhost:9090/api/stations/bounds/?startLat=${mapStartBoundLat}&endLat=${mapEndBoundLat}&startLng=${mapStartBoundLng}&endLng=${mapEndBoundLng}`)
+        .then(response => response.json())
+        .then(data => data.forEach(
+        station => {
+            const caltex = document.createElement("img");
+            const bp = document.createElement("img")
+            const shell = document.createElement("img")
+            const seven11 = document.createElement("img")
+                
+            caltex.src =
+                "https://i.postimg.cc/v8c2CbBV/ca1512cec7-caltex-logo-caltex-logo-removebg-preview.png";
 
-      bp.src = 
-        "https://i.postimg.cc/4yFcb6z8/BP-removebg-preview-3.png"
+            bp.src = 
+                "https://i.postimg.cc/4yFcb6z8/BP-removebg-preview-3.png"
 
-      shell.src = 
-        "https://i.postimg.cc/HLMQyCh5/Shell-logo-svg-removebg-preview.png"
+            shell.src = 
+                "https://i.postimg.cc/HLMQyCh5/Shell-logo-svg-removebg-preview.png"
 
-      seven11.src = 
-        "https://i.postimg.cc/x1tjNxgS/7-Eleven-logo-brand-logotype.png"
+            seven11.src = 
+                "https://i.postimg.cc/x1tjNxgS/7-Eleven-logo-brand-logotype.png"
 
-      let icons = {
-        Caltex: caltex,
-        BP: bp,
-        Shell: shell,
-        Seven11: seven11,
-      }
-    
-      let markerObject = {
-          map,  
-          position: { lat: parseFloat(station.latitude), lng: parseFloat(station.longitude) },
-          title: station.name,
-      }
+            let icons = {
+                Caltex: caltex,
+                BP: bp,
+                Shell: shell,
+                Seven11: seven11,
+            }
+            
+            let markerObject = {
+                map,  
+                position: { lat: parseFloat(station.latitude), lng: parseFloat(station.longitude) },
+                title: station.name,
+            }
 
-      let stationOwner = station.owner
-      if (icons.hasOwnProperty(stationOwner)) {
-        markerObject.content = icons[stationOwner]
-      } 
-      else if (stationOwner === "7-Eleven Pty Ltd") {
-        let Seven11 = "Seven11"
-        markerObject.content = icons[Seven11]
-      }
+            let stationOwner = station.owner
+            if (icons.hasOwnProperty(stationOwner)) {
+                markerObject.content = icons[stationOwner]
+            } 
+            else if (stationOwner === "7-Eleven Pty Ltd") {
+                let Seven11 = "Seven11"
+                markerObject.content = icons[Seven11]
+            }
 
-      const marker = new AdvancedMarkerElement(
-        markerObject
-      );
+            const marker = new AdvancedMarkerElement(
+                markerObject
+            );
 
-      const contentString = 
-      `<h4 id="firstHeading" class="firstHeading">${station.name}</h4>`
-      + station.address
-      const infoWindow = new InfoWindow({
-          content: contentString,
-      });
+            const contentString = 
+            `<h4 id="firstHeading" class="firstHeading">${station.name}</h4>`
+            + station.address
+            const infoWindow = new InfoWindow({
+                content: contentString,
+            });
 
-      marker.addListener("click", () => {
-          infoWindow.close();
-          infoWindow.open(marker.map, marker)
-      });
-    })
-  )         
-  })
+            marker.addListener("click", () => {
+                infoWindow.close();
+                infoWindow.open(marker.map, marker)
+            });
+        })
+    )         
+})
   
   google.maps.event.addListener(map, "center_changed", function() {
     var center = this.getCenter()
@@ -240,7 +240,28 @@ function geoFindMe() {
         mapCenterLat.textContent = mapStartCenterLat.toFixed(6)
         mapCenterLng.textContent = mapStartCenterLng.toFixed(6)
 
-        // fetch(`http://localhost:9090/api/stations/nearest?lat=${mapStartCenterLat}&lng=${mapStartCenterLng}`)
+        fetch(`http://localhost:9090/api/stations/nearest/?lat=${mapStartCenterLat}&lng=${mapStartCenterLng}`)
+            .then(response => response.json())
+            .then(result => console.log(result))
+            // .then(data => {
+            //     if (data.length >= 10) {
+            //         for (let i = 0; i < 10; i++) {
+            //             stations.push(data[i])
+            //         }
+            //     } else if (data) {
+            //         for (let station of data) {
+            //             stations.push(station)
+            //         }
+            //     } else {
+            //         stations = [
+            //             {
+            //                 name: '',
+            //                 distance: '',
+            //                 address: ''
+            //             }
+            //         ]
+            //     }
+            // })
 
 
         return `Latitude: ${latitude} °, Longitude: ${longitude} °`;
