@@ -287,6 +287,7 @@ function updateSpotlight(){
             mapStartCenterLat = parseFloat(station.latitude)
             mapStartCenterLng = parseFloat(station.longitude)
             initMap()
+            updateWeather(mapStartCenterLat,mapStartCenterLng)
         })
 }
 
@@ -304,10 +305,10 @@ function handleClickRefreshLink(event){
 }
 
 
-function updateWeather(){
-    
-    //fetch(`https://api.openweathermap.org/data/1.5/onecall?lat=${mapStartCenterLat}&lon=${mapStartCenterLng}&appid=129771f0d174445d08ff9b2fec870146&units=metric`)
-    fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${mapStartCenterLat}&lon=${mapStartCenterLng}&appid=621eaefe9c060ebcb83ed98c4f681378&units=metric`)
+function updateWeather(mapStartCenterLat,mapStartCenterLng){
+    let lat = mapStartCenterLat
+    let lng = mapStartCenterLng
+    fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lng}&appid=621eaefe9c060ebcb83ed98c4f681378&units=metric`)
         .then(response => response.json())
         .then(weatherData => {
             weatherLocation.textContent = weatherData.city.name + '/' + weatherData.city.country
