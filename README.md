@@ -16,10 +16,11 @@ Welcome to the Servo App project! Here, we present the collaborative work of Nik
 
 
 ## Screenshots of application
+![Our signle page application.](images/final.png)
 
 
 ## Wireframe - Supplied with the initial task
-![Wireframe template image](images/wireframe.png)
+![Wireframe template image.](images/wireframe.png)
 
 
 ## Features to Add
