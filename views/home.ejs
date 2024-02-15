@@ -13,7 +13,7 @@
         <nav class="navigation">
             <div class="spotlight">
                 <div class="spotlight-header">
-                    <h4>Spotlight</h4>
+                    <h3 class="spotlight-heading">Spotlight</h3>
                     <h4><a href="" id="refresh-link">refresh</a></h4>
                 </div>
                 <div class="spotlight-info">
@@ -24,9 +24,9 @@
 
 
             <div class="stats">
-                <h4>Stats</h4>
-                <h6>total stations: <%= data.total_stations %></h6>
-                <h6>total owners: <%= data.total_owners %></h6>
+                <h3 class="stats-heading">Stats</h3>
+                <h4>total stations: <%= data.total_stations %></h4>
+                <h4 class="stats-owners">total owners: <%= data.total_owners %></h4>
                 <% for (let i = 0; i < 7; i++) { %> 
                     <div class="flex-wrapper">
                         <div class="servo-name"><%= data.owners[i].owner %></div>
@@ -53,8 +53,8 @@
             </div>
 
             <div class="about">
-                <h3>About</h3>
-                <h4>The Three Musketeers</h4>
+                <h3 class="about-heading">About</h3>
+                <h4 class="about-team">The Three Musketeers</h4>
                 <div class="userInfo">
                     <img src="" alt="" class="github-img">
                     <div class="username">David</div>

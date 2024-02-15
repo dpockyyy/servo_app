@@ -35,7 +35,7 @@ const mapCtrAddress = document.querySelectorAll('.map-ctr-address')
 
 
 refreshLink.addEventListener('click', handleClickRefreshLink)
-stationLink.addEventListener('click', handleSpotlight)
+// stationLink.addEventListener('click', handleSpotlight)
 document.addEventListener('keydown', handleDisplay)
 // document.addEventListener("DOMContentLoaded", geoFindMe)
 document.addEventListener('click', handleClickCtrAddress)
@@ -217,9 +217,9 @@ window.addEventListener("load", () => {
         // changing background colour based on AM/PM
         const gridWrapper = document.querySelector('.grid-wrapper')
         if (ampm === "PM") {
-          gridWrapper.style.backgroundColor = "gray"
+          gridWrapper.style.background = "linear-gradient(90deg, rgba(120,159,139,1) 0%, rgba(72,137,187,1) 100%)"
         } else {
-          gridWrapper.style.backgroundColor = "mistyrose"
+          gridWrapper.style.background = "linear-gradient(90deg, rgba(120,159,139,1) 0%, rgba(72,137,187,1) 100%)"
         }
         //get current date and time
         
@@ -288,18 +288,18 @@ function updateSpotlight(){
         })
 }
 
-function handleSpotlight(){
+// function handleSpotlight(){
  
-    alert('wth')
-   console.log("do we ever come here?")  
-   console.log(spotlightLat)
-   console.log(spotlightLng)
-   mapStartCenterLat = spotlightLat
-   mapStartCenterLng = spotlightLng
-          initMap()
-          // updateWeather(mapStartCenterLat,mapStartCenterLng)
+//     alert('wth')
+//    console.log("do we ever come here?")  
+//    console.log(spotlightLat)
+//    console.log(spotlightLng)
+//    mapStartCenterLat = spotlightLat
+//    mapStartCenterLng = spotlightLng
+//           initMap()
+//           // updateWeather(mapStartCenterLat,mapStartCenterLng)
       
-}
+// }
 
 function handleClickRefreshLink(event){
     event.preventDefault()

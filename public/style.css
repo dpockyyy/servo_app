@@ -2,21 +2,55 @@
     /* border: 1px solid red; */
      box-sizing: border-box; 
      margin: 0;
+     font-family: "Arial";
 }
 .grid-wrapper {
     display: grid;
     grid-template-columns: 1fr 3fr 1fr;
     height: 100vh;
-    background-color: gray;
+    /* background-color: gray; */
 }
 
 .spotlight-header{
   display: grid;
   grid-template-columns: 3fr 1fr;
+
+}
+
+.spotlight {
+  padding: 25px;
+  border: 2px solid black;
+}
+
+#station-address {
+  font-weight: bold;
+}
+
+#station-link {
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+}
+
+.spotlight-heading {
+  padding-bottom: 10px;
 }
 
 .station-link{
   margin-bottom: 20px;
+  
+}
+
+.stats {
+  padding: 30px;
+  border: 2px solid black;
+}
+
+.stats-heading {
+  padding-bottom: 5px;
+}
+
+.stats-owners {
+  padding-bottom: 5px;
 }
 /* 
  * Always set the map height explicitly to define the size of the div element
@@ -62,6 +96,8 @@
 .flex-wrapper {
   display: flex;
   justify-content: space-between;
+  border-top: 1px solid black;
+  padding: 5px;
 }
 
 .weather-widget{
@@ -73,6 +109,21 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  margin: 1px;
+}
+
+.about {
+  padding: 30px;
+  border: 2px solid black;
+}
+
+.about-heading {
+  padding-bottom: 5px;
+}
+
+.about-team {
+  padding-bottom: 10px;
+  text-decoration: underline;
 }
 
 .weather-header {
@@ -138,6 +189,11 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  /* border: 2px solid black; */
+}
+
+.github {
+  padding-bottom: 5px;
 }
 
 .flex-wrapper-nearest {
