@@ -26,6 +26,7 @@ Welcome to the Servo App project! Here, we present the collaborative work of Nik
 - Improve the implementation of markers: only add station markers when they're visible and remove markers when they're out of bounds to improve performance. If markers are already showing in the map, scrolling the map slightly should not redraw existing markers.
 - Better CSS styling in the application: adding colours, fonts, borders, shadows, gradients, hover effects and hand crafted CSS.
 - When the user clicks on a service station on the right-hand side of the screen in the 'nearest' section, the Google Maps should be centered on the marker of that specific service station.
+- Bugfix: the 'find' button only works after you move the map around on the screen.
 
 
 ## Technologies Used
