@@ -25,14 +25,14 @@ router.get('/api/stats', (req, res) => {
 })
 
 router.get('/api/stations/nearest', (req, res) => {
-    let lat = req.query.lat
-    let lng = req.query.lng
-    console.log('hi');
+    let lat = parseFloat(req.query.lat)
+    let lng = parseFloat(req.query.lng)
     console.log(req.query);
-    Servo.findNearestServos(-37.42, 144, 20) // (-37.42, 144, 20)
-        .then(servos => {
-            res.json(servos)
-        })
+    console.log(lat)
+    console.log(lng)
+    Servo.findNearestServos(lat, lng, 20) // (-37.42, 144, 20)
+        .then(servos => res.json(servos))
+        // .then(data => console.log(data))
 })
 
 router.get('/api/stations/bounds', (req, res) => {
@@ -40,6 +40,10 @@ router.get('/api/stations/bounds', (req, res) => {
         .then(servos => res.json(servos))
 })
 
+router.post('/api/stations', (req, res) => {
+    Servo.createServo(params)
+        .then(servo => res.status(201).json(servo))
+})
 
 module.exports = router
 
