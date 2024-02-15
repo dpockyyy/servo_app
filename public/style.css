@@ -114,7 +114,7 @@
 
 .weather-widget p{
   font-size: 1em;
-  display: flexbox;
+  display: flex;
 }
 
 #weather-icon{
@@ -143,6 +143,7 @@
 .flex-wrapper-nearest {
   display: flex;
   gap: 3px;
+  padding: 3px;
 }
 
 #servo-distance {
@@ -154,13 +155,49 @@
 }
 
 #servo-station {
-  margin: 0px;
-  border-top: 0.5px solid black;
-  border-left: 0.5px solid black;
-  border-right: 0.5px solid black;
+  border-top: 2px solid black;
+  border-left: 2px solid black;
+  border-right: 2px solid black;;
+  padding: 10px;
   
 }
 
 #servo-station:last-child {
-  border-bottom: 0.5px solid black;
+  border-bottom: 2px solid black;
+}
+
+#clock {
+  text-align: center;
+  align-items: center;
+  border: 2px solid black;
+  font-family: 'Arial';
+  padding: 30px;
+}
+
+.center-location {
+  border: 2px solid black;
+  padding: 15px;
+}
+
+.center-coords {
+  padding: 5px;
+  padding-bottom: 10px;
+}
+
+.center-heading {
+  padding: 5px;
+}
+
+.map-ctr-address {
+  font-weight: bold;
+  padding: 5px;
+}
+
+.nearest-info {
+  padding: 20px;
+  border: 2px solid black;
+}
+
+.nearest-header {
+  padding: 10px;
 }

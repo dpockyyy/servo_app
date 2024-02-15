@@ -83,21 +83,25 @@
 
         <aside class="directions">
             <div id="clock">
-                <h4 id="date-time"></h4>
+                <h3 id="date-time"></h3>
             </div>
 
             <div class="center-location">
-                <h4>Map Center Location</h4>
-                <p>lat: <span id="map-ctr-lat"></span></p>
-                <p>lng: <span id="map-ctr-lng"></span></p>
-                <button class="find-address-btn">Find</button>
+                <h4 class="center-heading">Map Center Location</h4>
+                <div class="center-coords">
+                    <p>lat: <span id="map-ctr-lat"></span></p>
+                    <p>lng: <span id="map-ctr-lng"></span></p>
+                </div>
+                <!-- <button class="find-address-btn">Find</button> -->
                 <p><span class="map-ctr-address"></span></p>
             </div>
 
             <div class="nearest">
-                <h3>nearest</h3>
-                <input type="checkbox" onclick="handleCheckboxMeasurementToggle()" id="measurement-toggle">
-                <label for="">Show distances in km</label>
+                <div class="nearest-info">
+                    <h3 class="nearest-header">Nearest</h3>
+                    <input type="checkbox" onclick="handleCheckboxMeasurementToggle()" id="measurement-toggle">
+                    <label for="">Show distances in km</label>
+                </div>
                 
                 <div id="servo-station">
                     <div class="flex-wrapper-nearest">
