@@ -1,5 +1,5 @@
-const mapCenterLat = document.querySelector('.map-ctr-lat')
-const mapCenterLng = document.querySelector('.map-ctr-lng')
+const mapCenterLat = document.querySelector('#map-ctr-lat')
+const mapCenterLng = document.querySelector('#map-ctr-lng')
 const refreshLink = document.querySelector('#refresh-link')
 const stationName = document.querySelector('#station-name')
 const stationAddress = document.querySelector('#station-address')
@@ -19,7 +19,8 @@ const measurementToggle = document.querySelector('#measurement-toggle')
 const servoDistances = document.querySelectorAll('#servo-distance')
 const servoMeasurements = document.querySelectorAll('#servo-measurement')
 const servoStations = document.querySelectorAll('#servo-station')
-
+const findAddressBtn = document.querySelectorAll('.find-address-btn')
+const mapCtrAddress = document.querySelectorAll('.map-ctr-address')
 
 
 refreshLink.addEventListener('click', handleClickRefreshLink)
@@ -39,14 +40,25 @@ function loadUserImg() {
         img.src = data.avatar_url
         user.appendChild(img)
       })
-      
   }
 }
 
-refreshLink.addEventListener('click', handleClick)
+
 stationLink.addEventListener('click', updateSpotlight)
 document.addEventListener('keydown', handleDisplay)
 document.addEventListener("DOMContentLoaded", geoFindMe)
+document.addEventListener('click', handleClickCtrAddress)
+
+function handleClickCtrAddress(event){
+    let lat = mapCenterLat.textContent
+    let lng = mapCenterLng.textContent
+    let location = lat + ',' + lng
+    fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${location}&key=AIzaSyBBVmJUTQL7TidRGsReetenLy-OWCUElew`)
+     .then(result => result.json())
+     .then(data => {
+        mapCtrAddress[0].textContent = data.results[0].formatted_address
+     })
+}
 
 
 let show = true
@@ -333,5 +345,5 @@ function detectUserLocation() {
 // geoFindMe()
 updateSpotlight()
 // loadUserImg()
-// updateWeather()
+//updateWeather()
 // detectUserLocation()
