@@ -1,5 +1,5 @@
-const mapCenterLat = document.querySelector('.map-ctr-lat')
-const mapCenterLng = document.querySelector('.map-ctr-lng')
+const mapCenterLat = document.querySelector('#map-ctr-lat')
+const mapCenterLng = document.querySelector('#map-ctr-lng')
 const refreshLink = document.querySelector('#refresh-link')
 const stationName = document.querySelector('#station-name')
 const stationAddress = document.querySelector('#station-address')
@@ -19,16 +19,19 @@ const measurementToggle = document.querySelector('#measurement-toggle')
 const servoDistances = document.querySelectorAll('#servo-distance')
 const servoMeasurements = document.querySelectorAll('#servo-measurement')
 const servoStations = document.querySelectorAll('#servo-station')
-
+const findAddressBtn = document.querySelectorAll('.find-address-btn')
+const mapCtrAddress = document.querySelectorAll('.map-ctr-address')
 
 
 refreshLink.addEventListener('click', handleClickRefreshLink)
 stationLink.addEventListener('click', updateSpotlight)
 document.addEventListener('keydown', handleDisplay)
 document.addEventListener("DOMContentLoaded", geoFindMe)
+document.addEventListener('click', handleClickCtrAddress)
 for (let servoStation of servoStations) {
     servoStation.addEventListener('click', handleClickServoStation)
 }
+
 
 // attempted to add user imgs, probably going to sack this feature, going back to sleeeeep..
 function loadUserImg() {
@@ -42,8 +45,19 @@ function loadUserImg() {
         img.src = data.avatar_url
         user.appendChild(img)
       })
-      
   }
+}
+
+
+function handleClickCtrAddress(event){
+    let lat = mapCenterLat.textContent
+    let lng = mapCenterLng.textContent
+    let location = lat + ',' + lng
+    fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${location}&key=AIzaSyBBVmJUTQL7TidRGsReetenLy-OWCUElew`)
+     .then(result => result.json())
+     .then(data => {
+        mapCtrAddress[0].textContent = data.results[0].formatted_address
+     })
 }
 
 
@@ -273,9 +287,9 @@ function updateSpotlight(){
         .then(station => {
             stationLink.textContent = station.name
             stationAddress.textContent = station.address
-            // mapStartCenterLat = parseFloat(station.latitude)
-            // mapStartCenterLng = parseFloat(station.longitude)
-            // initMap()
+            mapStartCenterLat = parseFloat(station.latitude)
+            mapStartCenterLng = parseFloat(station.longitude)
+            initMap()
         })
 }
 
@@ -294,15 +308,20 @@ function handleClickRefreshLink(event){
 
 
 function updateWeather(){
-    fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${mapStartCenterLat}&lon=${mapStartCenterLng}&appid=347533d0e42725230e0bb151a7cb2eea&units=metric`)
+    
+    //fetch(`https://api.openweathermap.org/data/1.5/onecall?lat=${mapStartCenterLat}&lon=${mapStartCenterLng}&appid=129771f0d174445d08ff9b2fec870146&units=metric`)
+    fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${mapStartCenterLat}&lon=${mapStartCenterLng}&appid=621eaefe9c060ebcb83ed98c4f681378&units=metric`)
         .then(response => response.json())
         .then(weatherData => {
-            weatherLocation.textContent = weatherData.timezone.split('/')[1] + ', ' +  weatherData.timezone.split('/')[0] 
-            weatherDesc.textContent = weatherData.current.weather[0].description
-            weatherTemp.textContent = weatherData.current.temp
-            weatherRain.textContent = weatherData.daily[0].pop
-            weatherHumidity.textContent = weatherData.current.humidity
-            weatherWind.textContent = weatherData.current.wind_speed   
+            weatherLocation.textContent = weatherData.city.name + '/' + weatherData.city.country
+            weatherDesc.textContent = weatherData.list[0].weather[0].description
+            weatherTemp.textContent = weatherData.list[0].main.temp
+            let iconCode =  weatherData.list[0].weather[0].icon
+            let iconUrl = `http://openweathermap.org/img/wn/${iconCode}.png`
+            document.getElementById('weather-icon').src = iconUrl
+            weatherRain.textContent = weatherData.list[0].pop
+            weatherHumidity.textContent = weatherData.list[0].main.humidity
+            weatherWind.textContent = weatherData.list[0].wind.speed  
     })
 }
 
@@ -352,5 +371,5 @@ function detectUserLocation() {
 // geoFindMe()
 updateSpotlight()
 // loadUserImg()
-// updateWeather()
+updateWeather()
 // detectUserLocation()
