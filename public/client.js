@@ -266,9 +266,9 @@ function updateSpotlight(){
         .then(station => {
             stationLink.textContent = station.name
             stationAddress.textContent = station.address
-            // mapStartCenterLat = parseFloat(station.latitude)
-            // mapStartCenterLng = parseFloat(station.longitude)
-            // initMap()
+            mapStartCenterLat = parseFloat(station.latitude)
+            mapStartCenterLng = parseFloat(station.longitude)
+            initMap()
         })
 }
 
