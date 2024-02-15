@@ -35,16 +35,15 @@ const mapCtrAddress = document.querySelectorAll('.map-ctr-address')
 
 
 refreshLink.addEventListener('click', handleClickRefreshLink)
-stationLink.addEventListener('click', updateSpotlight)
+stationLink.addEventListener('click', handleSpotlight)
 document.addEventListener('keydown', handleDisplay)
-document.addEventListener("DOMContentLoaded", geoFindMe)
+// document.addEventListener("DOMContentLoaded", geoFindMe)
 document.addEventListener('click', handleClickCtrAddress)
 for (let servoStation of servoStations) {
     servoStation.addEventListener('click', handleClickServoStation)
 }
 
 
-// attempted to add user imgs, probably going to sack this feature, going back to sleeeeep..
 function loadUserImg() {
     for (let i = 0; i < 3; i++) {
         let user = github[i]
@@ -272,19 +271,35 @@ function geoFindMe() {
     initMap()
 }
 
+let spotlightLat = 0
+let spotlightLng = 0 
+
 function updateSpotlight(){
     fetch('http://localhost:9090/api/stations/random')
         .then(res => res.json())
         .then(station => {
             stationLink.textContent = station.name
             stationAddress.textContent = station.address
-            mapStartCenterLat = parseFloat(station.latitude)
-            mapStartCenterLng = parseFloat(station.longitude)
-            initMap()
+            spotlightLat = parseFloat(station.latitude)
+            spotlightLng = parseFloat(station.longitude)
+            console.log("updating")
+            // initMap()
             updateWeather(mapStartCenterLat,mapStartCenterLng)
         })
 }
 
+function handleSpotlight(){
+ 
+    alert('wth')
+   console.log("do we ever come here?")  
+   console.log(spotlightLat)
+   console.log(spotlightLng)
+   mapStartCenterLat = spotlightLat
+   mapStartCenterLng = spotlightLng
+          initMap()
+          // updateWeather(mapStartCenterLat,mapStartCenterLng)
+      
+}
 
 function handleClickRefreshLink(event){
     event.preventDefault()
@@ -344,10 +359,10 @@ function handleCheckboxMeasurementToggle() {
     }
 }
 
-// geoFindMe()
+geoFindMe()
 updateSpotlight()
 loadUserImg()
-// updateWeather()
+updateWeather()
 // detectUserLocation()
 
 function detectUserLocation() {
@@ -363,10 +378,3 @@ function detectUserLocation() {
     )
     console.log('sucess')
 }
-
-
-// geoFindMe()
-updateSpotlight()
-// loadUserImg()
-updateWeather()
-// detectUserLocation()
