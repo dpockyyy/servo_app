@@ -152,14 +152,14 @@ async function initMap() {
     )         
 })
   
-  google.maps.event.addListener(map, "center_changed", function() {
-    var center = this.getCenter()
-    var latitude = center.lat()
-    var longitude = center.lng()
-  mapCenterLat.textContent = latitude.toFixed(6)
-  mapCenterLng.textContent = longitude.toFixed(6)
-  
-  })
+    google.maps.event.addListener(map, "center_changed", function() {
+        var center = this.getCenter()
+        var latitude = center.lat()
+        var longitude = center.lng()
+    mapCenterLat.textContent = latitude.toFixed(6)
+    mapCenterLng.textContent = longitude.toFixed(6)
+    
+    })
 
 }
 
@@ -310,7 +310,6 @@ function updateWeather(){
 function handleClickServoStation(event) {
     mapStartCenterLat = mapCenterLat
     mapStartCenterLng = mapCenterLng
-
     
 }
 

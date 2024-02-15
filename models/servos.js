@@ -97,12 +97,12 @@ function findNearestServos(lat, lng, rad) {
 
 function findServosBounds(startLat, endLat, startLng, endLng) {
     let sql = `
-    SELECT * 
-    FROM servo_info
-    WHERE latitude < ${startLat}
-    AND latitude > ${endLat}
-    AND longitude < ${startLng}
-    AND longitude > ${endLng};
+        SELECT * 
+        FROM servo_info
+        WHERE latitude < ${startLat}
+        AND latitude > ${endLat}
+        AND longitude < ${startLng}
+        AND longitude > ${endLng};
     `
     // AND longitude > ${startLng}
     // AND longitude < ${endLng};
