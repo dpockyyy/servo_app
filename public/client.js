@@ -46,15 +46,15 @@ for (let servoStation of servoStations) {
 
 // attempted to add user imgs, probably going to sack this feature, going back to sleeeeep..
 function loadUserImg() {
-  for (let i = 0; i < 3; i++) {
-    let user = github[i]
-    let username = user.innerHTML.split('/')[3]
-    fetch(`https://api.github.com/users/${username}`)
-      .then(result => result.json())
-      .then(data => {
-        githubImg[i].src = data.avatar_url
-      })
-  }
+    for (let i = 0; i < 3; i++) {
+        let user = github[i]
+        let username = user.innerHTML.split('/')[3]
+        fetch(`https://api.github.com/users/${username}`)
+            .then(result => result.json())
+            .then(data => {
+                githubImg[i].src = data.avatar_url
+            })
+    }
 }
 
 
@@ -63,10 +63,10 @@ function handleClickCtrAddress(event){
     let lng = mapCenterLng.textContent
     let location = lat + ',' + lng
     fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${location}&key=AIzaSyBBVmJUTQL7TidRGsReetenLy-OWCUElew`)
-     .then(result => result.json())
-     .then(data => {
-        mapCtrAddress[0].textContent = data.results[0].formatted_address
-     })
+        .then(result => result.json())
+        .then(data => {
+            mapCtrAddress[0].textContent = data.results[0].formatted_address
+        })
 }
 
 
@@ -183,10 +183,7 @@ async function initMap() {
     mapCenterLng.textContent = longitude.toFixed(6)
     
     })
-
 }
-
-
 
 initMap()
 
@@ -241,38 +238,35 @@ window.addEventListener("load", () => {
 
 function geoFindMe() {
 
-  function success(position) {
-      const latitude = position.coords.latitude;
-      const longitude = position.coords.longitude;
-      mapStartCenterLat = latitude
-      mapStartCenterLng = longitude
-      mapCenterLat.textContent = mapStartCenterLat.toFixed(6)
-      mapCenterLng.textContent = mapStartCenterLng.toFixed(6)
+    function success(position) {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        mapStartCenterLat = latitude
+        mapStartCenterLng = longitude
+        mapCenterLat.textContent = mapStartCenterLat.toFixed(6)
+        mapCenterLng.textContent = mapStartCenterLng.toFixed(6)
 
-      fetch(`http://localhost:9090/api/stations/nearest/?lat=${mapStartCenterLat}&lng=${mapStartCenterLng}`)
-        .then(response => response.json())
-        .then(result => {
-          console.log(result)
-          return result})
-        .then(result => {
-          for (let i = 0; i < 10; i++) {
-            stationName[i].textContent = result[i].name
-            servoAddress[i].textContent = result[i].address
-            servoDistances[i].textContent = (Number(result[i].distance)*111.1*1000).toFixed(0)
-          }
-        })
-        
-      return `Latitude: ${latitude} °, Longitude: ${longitude} °`;
+        fetch(`http://localhost:9090/api/stations/nearest/?lat=${mapStartCenterLat}&lng=${mapStartCenterLng}`)
+            .then(response => response.json())
+            .then(result => {
+                for (let i = 0; i < 10; i++) {
+                    stationName[i].textContent = result[i].name
+                    servoAddress[i].textContent = result[i].address
+                    servoDistances[i].textContent = (Number(result[i].distance)*111.1*1000).toFixed(0)
+                }
+            })
+            
+        return `Latitude: ${latitude} °, Longitude: ${longitude} °`;
     }
 
     function error() {
-      return "Unable to retrieve your location";
+        return "Unable to retrieve your location";
     }
 
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(success, error);
+        navigator.geolocation.getCurrentPosition(success, error);
     } else {
-      return  "Geolocation is not supported by your browser";
+        return  "Geolocation is not supported by your browser";
     }
                       
     initMap()
@@ -327,6 +321,7 @@ function updateWeather(mapStartCenterLat,mapStartCenterLng){
 function handleClickServoStation(event) {
     mapStartCenterLat = mapCenterLat
     mapStartCenterLng = mapCenterLng
+    event.target
     
 }
 
