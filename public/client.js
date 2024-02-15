@@ -1,8 +1,10 @@
 const mapCenterLat = document.querySelector('#map-ctr-lat')
 const mapCenterLng = document.querySelector('#map-ctr-lng')
 const refreshLink = document.querySelector('#refresh-link')
-const stationName = document.querySelector('#station-name')
+const stationName = document.querySelectorAll('#servo-name')
+const servoAddress = document.querySelectorAll('#servo-address')
 const stationAddress = document.querySelector('#station-address')
+const stationDistance = document.querySelector('#servo-distance')
 const weatherLocation = document.querySelector('.weather-location')
 const weatherDesc = document.querySelector('.weather-desc')
 const weatherTemp = document.querySelector('.weather-temp')
@@ -15,15 +17,15 @@ const directions = document.querySelector('.directions')
 const gridWrapper = document.querySelector('.grid-wrapper')
 const github = document.querySelectorAll('.github')
 const githubImg = document.querySelectorAll('.github-img')
-const newStationBtn = document.querySelector('.add-new-servo')
-const newServoForm = document.querySelector('.new-servo-form')
+// const newStationBtn = document.querySelector('.add-new-servo')
+// const newServoForm = document.querySelector('.new-servo-form')
 
-newStationBtn.addEventListener('click', handleNewClick)
+// newStationBtn.addEventListener('click', handleNewClick)
 
-function handleNewClick() {
-  newServoForm.style.display = 'none'
-  alert('yay')
-}
+// function handleNewClick() {
+//   newServoForm.style.display = 'none'
+//   alert('yay')
+// }
 const measurementToggle = document.querySelector('#measurement-toggle')
 const servoDistances = document.querySelectorAll('#servo-distance')
 const servoMeasurements = document.querySelectorAll('#servo-measurement')
@@ -239,54 +241,42 @@ window.addEventListener("load", () => {
 
 function geoFindMe() {
 
-    function success(position) {
-        const latitude = position.coords.latitude;
-        const longitude = position.coords.longitude;
-        mapStartCenterLat = latitude
-        mapStartCenterLng = longitude
-        mapCenterLat.textContent = mapStartCenterLat.toFixed(6)
-        mapCenterLng.textContent = mapStartCenterLng.toFixed(6)
+  function success(position) {
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+      mapStartCenterLat = latitude
+      mapStartCenterLng = longitude
+      mapCenterLat.textContent = mapStartCenterLat.toFixed(6)
+      mapCenterLng.textContent = mapStartCenterLng.toFixed(6)
 
-        fetch(`http://localhost:9090/api/stations/nearest/?lat=${mapStartCenterLat}&lng=${mapStartCenterLng}`)
-            .then(response => response.json())
-            .then(result => console.log(result))
-            // .then(data => {
-            //     if (data.length >= 10) {
-            //         for (let i = 0; i < 10; i++) {
-            //             stations.push(data[i])
-            //         }
-            //     } else if (data) {
-            //         for (let station of data) {
-            //             stations.push(station)
-            //         }
-            //     } else {
-            //         stations = [
-            //             {
-            //                 name: '',
-            //                 distance: '',
-            //                 address: ''
-            //             }
-            //         ]
-            //     }
-            // })
-
-
-        return `Latitude: ${latitude} °, Longitude: ${longitude} °`;
+      fetch(`http://localhost:9090/api/stations/nearest/?lat=${mapStartCenterLat}&lng=${mapStartCenterLng}`)
+        .then(response => response.json())
+        .then(result => {
+          console.log(result)
+          return result})
+        .then(result => {
+          for (let i = 0; i < 10; i++) {
+            stationName[i].textContent = result[i].name
+            servoAddress[i].textContent = result[i].address
+            servoDistances[i].textContent = (Number(result[i].distance)*111.1*1000).toFixed(0)
+          }
+        })
+        
+      return `Latitude: ${latitude} °, Longitude: ${longitude} °`;
     }
 
     function error() {
-        return "Unable to retrieve your location";
+      return "Unable to retrieve your location";
     }
 
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(success, error);
+      navigator.geolocation.getCurrentPosition(success, error);
     } else {
-        return  "Geolocation is not supported by your browser";
+      return  "Geolocation is not supported by your browser";
     }
-
+                      
     initMap()
 }
-
 
 function updateSpotlight(){
     fetch('http://localhost:9090/api/stations/random')

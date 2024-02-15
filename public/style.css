@@ -1,6 +1,6 @@
 * {
-    /* border: 1px solid red;
-    box-sizing: border-box; */
+    /* border: 1px solid red; */
+     box-sizing: border-box; 
 }
 .grid-wrapper {
     display: grid;
@@ -81,7 +81,7 @@
   position: absolute;
   right: 50%;
   top: 50%;
-  /* display: none; */
+  display: none;
 }
 
 .github-img {
@@ -93,4 +93,29 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
+}
+
+.flex-wrapper-nearest {
+  display: flex;
+  gap: 3px;
+}
+
+#servo-distance {
+  font-weight: bold;
+}
+
+#servo-measurement {
+  font-weight: bold;
+}
+
+#servo-station {
+  margin: 0px;
+  border-top: 0.5px solid black;
+  border-left: 0.5px solid black;
+  border-right: 0.5px solid black;;
+  
+}
+
+#servo-station:last-child {
+  border-bottom: 0.5px solid black;
 }

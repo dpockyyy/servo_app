@@ -82,7 +82,7 @@ function findNearestServos(lat, lng, rad) {
             AND latitude > ${(lat - degrees)}
             AND longitude < ${(lng + degrees)}
             AND longitude > ${(lng - degrees)}
-        LIMIT 700;
+        LIMIT 400;
     `
 
     return db.query(sql)
