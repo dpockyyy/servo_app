@@ -12,34 +12,11 @@ app.use(express.static('public'))
 app.set('view engine', 'ejs')
 
 app.get('/', (req, res) => {
-    // let stations = []
-    // fetch('http://localhost:9090/api/stations/nearest')
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         if (data.length >= 10) {
-    //             for (let i = 0; i < 10; i++) {
-    //                 stations.push(data[i])
-    //             }
-    //         } else if (data) {
-    //             for (let station of data) {
-    //                 stations.push(station)
-    //             }
-    //         } else {
-    //             stations = [
-    //                 {
-    //                     name: '',
-    //                     distance: '',
-    //                     address: ''
-    //                 }
-    //             ]
-    //         }
-    //     })
     fetch('http://localhost:9090/api/stats')
         .then(res => res.json())
         .then(data => {
             res.render('home', {
                 MAPS_KEY: process.env.MAPS_KEY,
-                // stations: stations,
                 data: data
             })
         })
