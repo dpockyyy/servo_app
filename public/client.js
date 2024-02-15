@@ -287,15 +287,20 @@ function handleClickRefreshLink(event){
 
 
 function updateWeather(){
-    fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${mapStartCenterLat}&lon=${mapStartCenterLng}&appid=347533d0e42725230e0bb151a7cb2eea&units=metric`)
+    
+    //fetch(`https://api.openweathermap.org/data/1.5/onecall?lat=${mapStartCenterLat}&lon=${mapStartCenterLng}&appid=129771f0d174445d08ff9b2fec870146&units=metric`)
+    fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${mapStartCenterLat}&lon=${mapStartCenterLng}&appid=621eaefe9c060ebcb83ed98c4f681378&units=metric`)
         .then(response => response.json())
         .then(weatherData => {
-            weatherLocation.textContent = weatherData.timezone.split('/')[1] + ', ' +  weatherData.timezone.split('/')[0] 
-            weatherDesc.textContent = weatherData.current.weather[0].description
-            weatherTemp.textContent = weatherData.current.temp
-            weatherRain.textContent = weatherData.daily[0].pop
-            weatherHumidity.textContent = weatherData.current.humidity
-            weatherWind.textContent = weatherData.current.wind_speed   
+            weatherLocation.textContent = weatherData.city.name + '/' + weatherData.city.country
+            weatherDesc.textContent = weatherData.list[0].weather[0].description
+            weatherTemp.textContent = weatherData.list[0].main.temp
+            let iconCode =  weatherData.list[0].weather[0].icon
+            let iconUrl = `http://openweathermap.org/img/wn/${iconCode}.png`
+            document.getElementById('weather-icon').src = iconUrl
+            weatherRain.textContent = weatherData.list[0].pop
+            weatherHumidity.textContent = weatherData.list[0].main.humidity
+            weatherWind.textContent = weatherData.list[0].wind.speed  
     })
 }
 
@@ -345,5 +350,5 @@ function detectUserLocation() {
 // geoFindMe()
 updateSpotlight()
 // loadUserImg()
-//updateWeather()
+updateWeather()
 // detectUserLocation()
