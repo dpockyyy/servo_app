@@ -107,10 +107,12 @@ async function initMap() {
 
     google.maps.event.addListener(map, "idle", function() {
         var bounds = map.getBounds();
-        let mapStartBoundLat = bounds.ci.hi
-        let mapEndBoundLat = bounds.ci.lo
-        let mapStartBoundLng = bounds.Lh.hi
-        let mapEndBoundLng = bounds.Lh.lo
+        // console.log(bounds)
+        let mapStartBoundLat = bounds.Zh.hi
+        let mapEndBoundLat = bounds.Zh.lo
+        let mapStartBoundLng = bounds.Jh.hi
+        let mapEndBoundLng = bounds.Jh.lo
+
         
     fetch(`http://localhost:9090/api/stations/bounds/?startLat=${mapStartBoundLat}&endLat=${mapEndBoundLat}&startLng=${mapStartBoundLng}&endLng=${mapEndBoundLng}`)
         .then(response => response.json())
@@ -184,7 +186,7 @@ async function initMap() {
     })
 }
 
-initMap()
+// initMap()
 
 
 window.addEventListener("load", () => {
@@ -245,6 +247,8 @@ function geoFindMe() {
         mapCenterLat.textContent = mapStartCenterLat.toFixed(6)
         mapCenterLng.textContent = mapStartCenterLng.toFixed(6)
 
+        updateWeather(mapStartCenterLat, mapStartCenterLng)
+        initMap()
         fetch(`http://localhost:9090/api/stations/nearest/?lat=${mapStartCenterLat}&lng=${mapStartCenterLng}`)
             .then(response => response.json())
             .then(result => {
@@ -268,7 +272,8 @@ function geoFindMe() {
         return  "Geolocation is not supported by your browser";
     }
                       
-    initMap()
+    
+    
 }
 
 let spotlightLat = 0
@@ -282,9 +287,9 @@ function updateSpotlight(){
             stationAddress.textContent = station.address
             spotlightLat = parseFloat(station.latitude)
             spotlightLng = parseFloat(station.longitude)
-            console.log("updating")
+            // console.log("updating")
             // initMap()
-            updateWeather(mapStartCenterLat,mapStartCenterLng)
+            // updateWeather(mapStartCenterLat,mapStartCenterLng)
         })
 }
 
@@ -317,6 +322,8 @@ function handleClickRefreshLink(event){
 function updateWeather(mapStartCenterLat,mapStartCenterLng){
     let lat = mapStartCenterLat
     let lng = mapStartCenterLng
+    // console.log(lat)
+    // console.log(lng)
     fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lng}&appid=621eaefe9c060ebcb83ed98c4f681378&units=metric`)
         .then(response => response.json())
         .then(weatherData => {
@@ -362,7 +369,7 @@ function handleCheckboxMeasurementToggle() {
 geoFindMe()
 updateSpotlight()
 loadUserImg()
-updateWeather()
+// updateWeather()
 // detectUserLocation()
 
 function detectUserLocation() {
