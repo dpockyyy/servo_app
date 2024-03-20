@@ -114,7 +114,7 @@ async function initMap() {
         let mapEndBoundLng = bounds.Jh.lo
 
         
-    fetch(`http://localhost:9090/api/stations/bounds/?startLat=${mapStartBoundLat}&endLat=${mapEndBoundLat}&startLng=${mapStartBoundLng}&endLng=${mapEndBoundLng}`)
+    fetch(`/api/stations/bounds/?startLat=${mapStartBoundLat}&endLat=${mapEndBoundLat}&startLng=${mapStartBoundLng}&endLng=${mapEndBoundLng}`)
         .then(response => response.json())
         .then(data => data.forEach(
         station => {
@@ -249,7 +249,7 @@ function geoFindMe() {
 
         updateWeather(mapStartCenterLat, mapStartCenterLng)
         initMap()
-        fetch(`http://localhost:9090/api/stations/nearest/?lat=${mapStartCenterLat}&lng=${mapStartCenterLng}`)
+        fetch(`/api/stations/nearest/?lat=${mapStartCenterLat}&lng=${mapStartCenterLng}`)
             .then(response => response.json())
             .then(result => {
                 for (let i = 0; i < 10; i++) {
@@ -280,7 +280,7 @@ let spotlightLat = 0
 let spotlightLng = 0 
 
 function updateSpotlight(){
-    fetch('http://localhost:9090/api/stations/random')
+    fetch('/api/stations/random')
         .then(res => res.json())
         .then(station => {
             stationLink.textContent = station.name
@@ -308,7 +308,7 @@ function updateSpotlight(){
 
 function handleClickRefreshLink(event){
     event.preventDefault()
-    fetch('http://localhost:9090/api/stations/random')
+    fetch('/api/stations/random')
     .then(res => res.json())
     .then(station => {
         stationLink.textContent = station.name
